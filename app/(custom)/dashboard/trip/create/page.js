@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 const defaultFormFields = {
   city: "",
   country: "",
-  start: new Date().toISOString().substring(0, 10),
-  end: new Date().toISOString().substring(0, 10),
+  start: "",
+  end: "",
 };
 
 export default function TripForm() {
@@ -20,30 +20,44 @@ export default function TripForm() {
     setFormFields(defaultFormFields);
   };
 
+  const submit = async () => {
+    try {
+      const response = await fetch(
+        "https://teri-eyenike-s-workspace-14frfm.eu-west-1.xata.sh/db/track-trip-dashboard-with-xata-next:main/tables/trips/data?columns=id",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_XATA_API_KEY}`,
+          },
+          body: JSON.stringify({
+            city: city,
+            country: country,
+            start: start,
+            end: end,
+          }),
+        }
+      );
+      if (response.ok) {
+        console.log("Trip data stored successfully.");
+        resetFormFields();
+        router.push("/dashboard");
+      } else {
+        console.error("Failed to store trip data.");
+      }
+    } catch (error) {
+      console.error("Error storing trip data:", error);
+    }
+  };
+
   const handleFormSubmit = (event) => {
-    fetch("api/trips", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        city,
-        country,
-        start,
-        end,
-      }),
-    });
     event.preventDefault();
-    router.push("/dashboard");
-    resetFormFields();
+    submit();
   };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormFields((prevFields) => ({
-      ...prevFields,
-      [name]: value,
-    }));
+    setFormFields({ ...formFields, [name]: value });
   };
 
   return (
@@ -86,6 +100,7 @@ export default function TripForm() {
             className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none'
           />
         </div>
+
         <div>
           <label htmlFor='start' className='block text-gray-700 font-bold mb-2'>
             Start date
@@ -114,6 +129,7 @@ export default function TripForm() {
             className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none'
           />
         </div>
+
         <button
           type='submit'
           className='bg-green-400 px-7 py-2 rounded hover:cursor-pointer hover:bg-green-300'>

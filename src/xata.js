@@ -10,10 +10,11 @@ const tables = [
       { name: "country", type: "string" },
       {
         name: "start",
-        type: "datetime",
-        defaultValue: "2024-06-03T00:00:00.000Z",
+        type: "string",
+        notNull: true,
+        defaultValue: "2024-04-01",
       },
-      { name: "end", type: "datetime" },
+      { name: "end", type: "string", defaultValue: "2024-04-18" },
     ],
   },
 ];
