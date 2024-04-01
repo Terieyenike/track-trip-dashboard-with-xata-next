@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const defaultFormFields = {
   city: "",
@@ -13,8 +14,6 @@ const defaultFormFields = {
 export default function TripForm() {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { city, country, start, end } = formFields;
-
-  const router = useRouter();
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -39,14 +38,13 @@ export default function TripForm() {
         }
       );
       if (response.ok) {
-        console.log("Trip data stored successfully.");
+        toast.success("Trip data stored successfully.");
         resetFormFields();
-        router.push("/dashboard");
       } else {
-        console.error("Failed to store trip data.");
+        toast.error("Failed to store trip data.");
       }
     } catch (error) {
-      console.error("Error storing trip data:", error);
+      toast.error("Error storing trip data:", error.message);
     }
   };
 
@@ -136,6 +134,7 @@ export default function TripForm() {
           Save
         </button>
       </form>
+      <ToastContainer theme='dark' />
     </section>
   );
 }
