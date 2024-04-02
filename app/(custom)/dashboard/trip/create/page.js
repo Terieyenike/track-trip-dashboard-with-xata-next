@@ -58,6 +58,12 @@ export default function TripForm() {
     setFormFields({ ...formFields, [name]: value });
   };
 
+  const today = new Date().toISOString().split("T")[0];
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const tomorrowFormatted = tomorrow.toISOString().split("T")[0];
+
   return (
     <section>
       <h1 className='text-4xl mb-8'>Trip Form</h1>
@@ -110,6 +116,7 @@ export default function TripForm() {
             value={start}
             onChange={handleInputChange}
             id='start'
+            min={today}
             className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none'
           />
         </div>
@@ -123,6 +130,8 @@ export default function TripForm() {
             name='end'
             onChange={handleInputChange}
             value={end}
+            min={tomorrowFormatted}
+            max={"2050-12-31"}
             id='end'
             className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none'
           />

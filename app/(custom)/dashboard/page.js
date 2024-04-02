@@ -17,13 +17,20 @@ export default async function Dashboard() {
 
   return (
     <>
-      <h1 className='text-4xl mb-8'>My Trips</h1>
+      <div>
+        <h1 className='text-4xl mb-8'>My Trips</h1>
+      </div>
       {trips.length === 0 && <p>No travel memories found</p>}
       {trips.map((trip) => (
         <Link href='#' key={trip.id}>
           <div className='bg-gray-50 p-10 rounded shadow my-4 hover:shadow-lg hover:cursor-pointer'>
             <p className='text-lg'>
-              {trip.country} | {trip.city}
+              {trip.country.toUpperCase()} |{" "}
+              {trip.city
+                .toLowerCase()
+                .split(" ")
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ")}
             </p>
             <p className='text-sm pt-4'>
               <span>{formatDate(trip.start)}</span> to{" "}
