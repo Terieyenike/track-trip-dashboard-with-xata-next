@@ -19,7 +19,18 @@ export default function TripForm() {
     setFormFields(defaultFormFields);
   };
 
+  const validateDate = () => {
+    if (new Date(end) <= new Date(start)) {
+      toast.error("End date must be greater than the start date.");
+      return false;
+    }
+    return true;
+  };
+
   const submit = async () => {
+    if (!validateDate()) {
+      return;
+    }
     try {
       const response = await fetch(
         "https://teri-eyenike-s-workspace-14frfm.eu-west-1.xata.sh/db/track-trip-dashboard-with-xata-next:main/tables/trips/data?columns=id",
