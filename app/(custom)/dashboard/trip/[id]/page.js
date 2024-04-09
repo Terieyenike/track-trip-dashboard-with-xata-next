@@ -38,7 +38,7 @@ export default async function Trip() {
               <p className='text-center mt-2 text-gray-600'>Rating: 4/5</p>
             </div>
           </Link>
-          <Link href={"dashboard/note/create"}>
+          <Link href={"/dashboard/note/create"}>
             <div className='border-2 border-dashed rounded-lg hover:shadow w-48 h-48 flex justify-center items-center'>
               <p className='min-h-32'>New Note +</p>
             </div>
