@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getXataClient } from "@/src/xata";
+import Header from "@/components/Heading";
 
 const xata = getXataClient();
 
@@ -17,12 +18,11 @@ export default async function Dashboard() {
 
   return (
     <>
-      <div>
-        <h1 className='text-4xl mb-8'>My Trips</h1>
-      </div>
+      <Header name={"My Trips"} />
+
       {trips.length === 0 && <p>No travel memories found</p>}
       {trips.map((trip) => (
-        <Link href='#' key={trip.id}>
+        <Link href={`dashboard/trip/${trip.id}`} key={trip.id}>
           <div className='bg-gray-50 p-10 rounded shadow my-4 hover:shadow-lg hover:cursor-pointer'>
             <p className='text-lg'>
               {trip.country.toUpperCase()} |{" "}

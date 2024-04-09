@@ -1,5 +1,6 @@
 "use client";
 
+import Header from "@/components/Heading";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -38,7 +39,7 @@ export default function TripForm() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_XATA_API_KEY}`,
+            Authorization: `Bearer ${process.env.XATA_API_KEY}`,
           },
           body: JSON.stringify({
             city: city,
@@ -77,7 +78,7 @@ export default function TripForm() {
 
   return (
     <section>
-      <h1 className='text-4xl mb-8'>Trip Form</h1>
+      <Header name={"Trip Form"} />
       <form onSubmit={handleFormSubmit}>
         <div>
           <label htmlFor='city' className='block text-gray-700 font-bold mb-2'>
