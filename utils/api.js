@@ -8,7 +8,7 @@ const submitTripData = async (city, country, start, end) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.XATA_API_KEY}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_XATA_API_KEY}`,
         },
         body: JSON.stringify({
           city: city,
@@ -20,8 +20,6 @@ const submitTripData = async (city, country, start, end) => {
     );
     if (response.ok) {
       toast.success("Trip data stored successfully.");
-      // Optionally, return data if needed
-      // return await response.json();
     } else {
       toast.error("Failed to store trip data.");
     }

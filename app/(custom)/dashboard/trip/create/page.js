@@ -1,6 +1,7 @@
 "use client";
 
 import Header from "@/components/Heading";
+import { submitTripData } from "@/utils/api";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,32 +33,8 @@ export default function TripForm() {
     if (!validateDate()) {
       return;
     }
-    try {
-      const response = await fetch(
-        "https://teri-eyenike-s-workspace-14frfm.eu-west-1.xata.sh/db/track-trip-dashboard-with-xata-next:main/tables/trips/data?columns=id",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_XATA_API_KEY}`,
-          },
-          body: JSON.stringify({
-            city: city,
-            country: country,
-            start: start,
-            end: end,
-          }),
-        }
-      );
-      if (response.ok) {
-        toast.success("Trip data stored successfully.");
-        resetFormFields();
-      } else {
-        toast.error("Failed to store trip data.");
-      }
-    } catch (error) {
-      toast.error("Error storing trip data:", error.message);
-    }
+    await submitTripData(city, country, start, end);
+    resetFormFields();
   };
 
   const handleFormSubmit = (event) => {
