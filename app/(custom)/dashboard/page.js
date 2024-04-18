@@ -4,6 +4,8 @@ import Header from "@/components/Heading";
 
 const xata = getXataClient();
 
+export const revalidate = 3600;
+
 export default async function Dashboard() {
   const trips = await xata.db.trips.getAll();
 
