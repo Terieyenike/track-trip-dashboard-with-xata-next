@@ -1,0 +1,16 @@
+{
+  "id": "mig_co28j27e5o319iij8o60",
+  "parentID": "mig_co28iv7e5o319iij8o50",
+  "checksum": "1:6f6be05f5907e9c060e9a93c9eea1bf00e6b257cc63666ba859d9f5da204dc85",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "end_date",
+          "type": "datetime"
+        },
+        "table": "trips"
+      }
+    }
+  ]
+}

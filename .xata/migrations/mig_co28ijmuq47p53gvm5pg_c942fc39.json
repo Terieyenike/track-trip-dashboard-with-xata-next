@@ -1,0 +1,16 @@
+{
+  "id": "mig_co28ijmuq47p53gvm5pg",
+  "parentID": "mig_co28ihmuq47p53gvm5og",
+  "checksum": "1:c942fc39672af7dd4438e92b9c3304665a9abc1c99c68f1d28b0562de973ae6c",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "country",
+          "type": "string"
+        },
+        "table": "trips"
+      }
+    }
+  ]
+}

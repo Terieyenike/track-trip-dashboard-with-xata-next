@@ -1,0 +1,18 @@
+{
+  "id": "mig_coa5ohfo7qni9898obh0",
+  "parentID": "mig_co9fa9fdifft4ad8n3e0",
+  "checksum": "1:79331eae855b2adeb2ff1da5c617d722dab26ec54400c39a13aa1e8e63c33e93",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "name",
+          "type": "string",
+          "notNull": true,
+          "defaultValue": "Gelato"
+        },
+        "table": "notes"
+      }
+    }
+  ]
+}

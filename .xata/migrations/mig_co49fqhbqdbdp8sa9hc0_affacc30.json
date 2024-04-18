@@ -1,0 +1,12 @@
+{
+  "id": "mig_co49fqhbqdbdp8sa9hc0",
+  "parentID": "mig_co49fgqg71l8r6rp3ht0",
+  "checksum": "1:affacc30bd0995764152fe15fec461b5f4aaf738a56320b016dc60f0d4ab6b4d",
+  "operations": [
+    {
+      "addTable": {
+        "table": "trips"
+      }
+    }
+  ]
+}

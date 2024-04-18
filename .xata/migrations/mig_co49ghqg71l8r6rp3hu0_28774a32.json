@@ -1,0 +1,16 @@
+{
+  "id": "mig_co49ghqg71l8r6rp3hu0",
+  "parentID": "mig_co49fqhbqdbdp8sa9hc0",
+  "checksum": "1:28774a32f3bab5fe1047226fe6baa515fa74474d409cd66274684935e87920af",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "city",
+          "type": "string"
+        },
+        "table": "trips"
+      }
+    }
+  ]
+}

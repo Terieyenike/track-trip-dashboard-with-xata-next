@@ -1,0 +1,13 @@
+{
+  "id": "mig_co28icck3eooa9smiv5g",
+  "parentID": "mig_co28i86uq47p53gvm5ng",
+  "checksum": "1:04bef48745a57c6a44577a7b2e12d599d42b82548a8eabe7b75e7618991aa3a8",
+  "operations": [
+    {
+      "renameTable": {
+        "newName": "trips",
+        "oldName": "t"
+      }
+    }
+  ]
+}

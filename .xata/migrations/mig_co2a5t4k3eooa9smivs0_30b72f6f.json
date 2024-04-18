@@ -1,0 +1,14 @@
+{
+  "id": "mig_co2a5t4k3eooa9smivs0",
+  "parentID": "mig_co2a5qmuq47p53gvm600",
+  "checksum": "1:30b72f6faffc4bf7cdfb258d5942b27e348a5388f525d589ebb4b4cdbe6f5be7",
+  "operations": [
+    {
+      "renameColumn": {
+        "newName": "end",
+        "oldName": "end_date",
+        "table": "trips"
+      }
+    }
+  ]
+}

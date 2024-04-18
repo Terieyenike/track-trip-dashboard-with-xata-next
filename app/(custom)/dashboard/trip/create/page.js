@@ -22,6 +22,10 @@ export default function TripForm() {
   };
 
   const validateDate = () => {
+    if (!start || !end) {
+      toast.error("Please fill in both start and end dates.");
+      return false;
+    }
     if (new Date(end) <= new Date(start)) {
       toast.error("End date must be greater than the start date.");
       return false;
@@ -37,9 +41,16 @@ export default function TripForm() {
     resetFormFields();
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
-    submit();
+    try {
+      if (validateDate()) {
+        await submit();
+        toast.success("Trip data stored successfully.");
+      }
+    } catch (error) {
+      toast.error("Error storing trip data:", error.message);
+    }
   };
 
   const handleInputChange = (event) => {

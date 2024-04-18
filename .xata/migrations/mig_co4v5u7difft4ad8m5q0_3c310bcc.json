@@ -1,0 +1,17 @@
+{
+  "id": "mig_co4v5u7difft4ad8m5q0",
+  "parentID": "mig_co4v5oag71l8r6rp3mm0",
+  "checksum": "1:3c310bcc2e2b146db186fe025d40baba90bc8a1fe5223cbe6b04532fec85f3e8",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "end",
+          "type": "string",
+          "defaultValue": "2024-04-18"
+        },
+        "table": "trips"
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "mig_coa5rfvo7qni9898obl0",
+  "parentID": "mig_coa5qc5omdhu8hp3d110",
+  "checksum": "1:aea541a26d9b696c22932f225886d9fcc8b0e66f90a9bf9a70a23832d12343d3",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "trip",
+          "type": "link",
+          "link": {
+            "table": "trips"
+          }
+        },
+        "table": "notes"
+      }
+    }
+  ]
+}

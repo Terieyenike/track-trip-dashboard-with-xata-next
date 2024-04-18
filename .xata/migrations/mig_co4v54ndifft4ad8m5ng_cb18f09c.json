@@ -1,0 +1,13 @@
+{
+  "id": "mig_co4v54ndifft4ad8m5ng",
+  "parentID": "mig_co4iamvdifft4ad8m1j0",
+  "checksum": "1:cb18f09c62efc52736c659b17fde6c30985aae5324673c5445c87a63ef59d146",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "start",
+        "table": "trips"
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "mig_co2a5qmuq47p53gvm600",
+  "parentID": "mig_co28j27e5o319iij8o60",
+  "checksum": "1:a01f66c5d1de6bc7531c35503c7476ec02677f92792266c6349641a46aae2116",
+  "operations": [
+    {
+      "renameColumn": {
+        "newName": "start",
+        "oldName": "start_date",
+        "table": "trips"
+      }
+    }
+  ]
+}
