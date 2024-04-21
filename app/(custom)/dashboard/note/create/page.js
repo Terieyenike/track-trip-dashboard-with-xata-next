@@ -2,22 +2,28 @@
 
 import Header from "@/components/Heading";
 import { getTrips } from "@/utils/get-trips";
+import { notesData } from "@/utils/api";
 import { useState, useEffect } from "react";
 
 const defaultFormFields = {
   city: "",
+  name: "",
+  img: "",
+  description: "",
+  rating: "",
+  type: "",
 };
 
 export default function NoteForm() {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { city } = formFields;
+  const { city, name, description, type, rating, img } = formFields;
   const [trips, setTrips] = useState([]);
 
   useEffect(() => {
     const fetchTrips = async () => {
       try {
         const tripsData = await getTrips();
-        setTrips(JSON.parse(JSON.stringify(tripsData)));
+        setTrips(JSON.parse(tripsData));
       } catch (error) {
         console.error("Error fetching trips:", error);
       }
@@ -30,9 +36,10 @@ export default function NoteForm() {
     setFormFields(defaultFormFields);
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(city);
+    await notesData(city);
     resetFormFields;
   };
 
