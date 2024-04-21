@@ -1,0 +1,16 @@
+{
+  "id": "mig_coi0rc1atd3tffebgoug",
+  "parentID": "mig_coi0r61atd3tffebgotg",
+  "checksum": "1:6850cdc94b1d80daa5bc76ef956752907cc99ddb7473d84d1936cab0bf3a09ab",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "rating",
+          "type": "int"
+        },
+        "table": "notes"
+      }
+    }
+  ]
+}

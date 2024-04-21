@@ -16,6 +16,18 @@ const tables = [
       },
       { name: "end", type: "string", defaultValue: "2024-04-18" },
     ],
+    revLinks: [{ column: "trip", table: "notes" }],
+  },
+  {
+    name: "notes",
+    columns: [
+      { name: "name", type: "string" },
+      { name: "description", type: "text" },
+      { name: "img", type: "file", file: { defaultPublicAccess: true } },
+      { name: "rating", type: "int" },
+      { name: "trip", type: "link", link: { table: "trips" } },
+      { name: "type", type: "string", defaultValue: "" },
+    ],
   },
 ];
 /** @type { import('@xata.io/client').ClientConstructor<{}> } */

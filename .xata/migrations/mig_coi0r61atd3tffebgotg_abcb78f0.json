@@ -1,0 +1,19 @@
+{
+  "id": "mig_coi0r61atd3tffebgotg",
+  "parentID": "mig_coi0qohatd3tffebgosg",
+  "checksum": "1:abcb78f007d529f078b4ed1bc9633b127a578b4968d2e0331cc7020fcbd3ded0",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "img",
+          "type": "file",
+          "file": {
+            "defaultPublicAccess": true
+          }
+        },
+        "table": "notes"
+      }
+    }
+  ]
+}

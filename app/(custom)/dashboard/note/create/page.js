@@ -1,15 +1,30 @@
 "use client";
 
 import Header from "@/components/Heading";
-import { useState } from "react";
+import { getTrips } from "@/utils/get-trips";
+import { useState, useEffect } from "react";
 
 const defaultFormFields = {
-  options: "",
+  city: "",
 };
 
 export default function NoteForm() {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { options } = formFields;
+  const { city } = formFields;
+  const [trips, setTrips] = useState([]);
+
+  useEffect(() => {
+    const fetchTrips = async () => {
+      try {
+        const tripsData = await getTrips();
+        setTrips(JSON.parse(JSON.stringify(tripsData)));
+      } catch (error) {
+        console.error("Error fetching trips:", error);
+      }
+    };
+
+    fetchTrips();
+  }, []);
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -17,6 +32,7 @@ export default function NoteForm() {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
+    console.log(city);
     resetFormFields;
   };
 
@@ -30,25 +46,24 @@ export default function NoteForm() {
       <Header name={"Note Form"} />
       <form onSubmit={handleFormSubmit}>
         <div>
-          <label
-            htmlFor='options'
-            className='block text-gray-700 font-bold mb-2'>
+          <label htmlFor='city' className='block text-gray-700 font-bold mb-2'>
             Trip
             <span>*</span>
           </label>
           <select
-            value={options}
-            name='options'
-            id='options'
+            value={city}
+            name='city'
+            id='city'
             onChange={handleChange}
             className='block w-full py-2 px-4 mt-3 mb-5 border border-gray-300 rounded-lg text-gray-700 bg-white focus:outline-none leading-normal'>
             <option value='' disabled className='text-gray-500'>
               ---------
             </option>
-            <option value='san francisco'>San Francisco</option>
-            <option value='saint louis'>Saint Louis</option>
-            <option value='melbourne'>Melbourne</option>
-            <option value='kpalime'>Kpalime</option>
+            {trips.map((trip) => (
+              <option key={trip.id} value={trip.city}>
+                {trip.city}
+              </option>
+            ))}
           </select>
         </div>
         <button

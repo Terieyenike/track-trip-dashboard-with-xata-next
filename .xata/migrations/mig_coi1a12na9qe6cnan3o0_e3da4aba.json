@@ -1,0 +1,17 @@
+{
+  "id": "mig_coi1a12na9qe6cnan3o0",
+  "parentID": "mig_coi19pcdh80ve3s0urlg",
+  "checksum": "1:e3da4abaef8b5141cfccf9220e7d9537963feff0127dbef7f541c8737dfebebb",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "type",
+          "type": "string",
+          "defaultValue": ""
+        },
+        "table": "notes"
+      }
+    }
+  ]
+}

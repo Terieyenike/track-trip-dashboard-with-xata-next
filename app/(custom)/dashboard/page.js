@@ -1,18 +1,31 @@
-import Link from "next/link";
-import { getXataClient } from "@/src/xata";
-import Header from "@/components/Heading";
+"use client";
 
-const xata = getXataClient();
+import Link from "next/link";
+import Header from "@/components/Heading";
+import { useState, useEffect } from "react";
+import { getTrips } from "@/utils/get-trips";
 
 export const revalidate = 0;
 
-export default async function Dashboard() {
-  const trips = await xata.db.trips.getAll();
+export default function Dashboard() {
+  const [trips, setTrips] = useState([]);
+
+  useEffect(() => {
+    const fetchTrips = async () => {
+      try {
+        const tripsData = await getTrips();
+        setTrips(JSON.parse(JSON.stringify(tripsData)));
+      } catch (error) {
+        console.error("Error fetching trips:", error);
+      }
+    };
+
+    fetchTrips();
+  }, []);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
-      // year: "numeric",
       month: "long",
       day: "numeric",
     });
@@ -27,16 +40,18 @@ export default async function Dashboard() {
         <Link href={`dashboard/trip/${trip.id}`} key={trip.id}>
           <div className='bg-gray-50 p-10 rounded shadow my-4 hover:shadow-lg hover:cursor-pointer'>
             <p className='text-lg'>
-              {trip.country.toUpperCase()} |{" "}
+              {trip.country ? trip.country.toUpperCase() : ""} |{" "}
               {trip.city
-                .toLowerCase()
-                .split(" ")
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(" ")}
+                ? trip.city
+                    .toLowerCase()
+                    .split(" ")
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ")
+                : ""}
             </p>
             <p className='text-sm pt-4'>
-              <span>{formatDate(trip.start)}</span> to{" "}
-              <span>{formatDate(trip.end)}</span>
+              <span>{trip.start ? formatDate(trip.start) : ""}</span> to{" "}
+              <span>{trip.end ? formatDate(trip.end) : ""}</span>
             </p>
           </div>
         </Link>

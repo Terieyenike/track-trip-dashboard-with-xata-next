@@ -2,8 +2,9 @@
 
 import { getXataClient } from "@/src/xata";
 
+const xata = getXataClient();
+
 export async function submitTripData(city, country, start, end) {
-  const xata = getXataClient();
   await xata.db.trips.create({
     city: city,
     country: country,
@@ -11,3 +12,9 @@ export async function submitTripData(city, country, start, end) {
     end: end,
   });
 }
+
+// export async function notesData() {
+//   await xata.db.notes.create({
+
+//   })
+// }
