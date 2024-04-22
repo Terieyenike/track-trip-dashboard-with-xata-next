@@ -1,13 +1,20 @@
 import Header from "@/components/Heading";
 import Link from "next/link";
 import Image from "next/image";
+import { getXataClient } from "@/src/xata";
 
-export default async function Trip() {
+const xata = getXataClient();
+
+export default async function Trip({ params }) {
+  const record = await xata.db.trips.filter({ id: params.id }).getFirst();
+
   return (
     <>
       <Header name={"Trip Details"} />
       <div className='bg-gray-50 p-8 rounded shadow my-4'>
-        <p className='text-2xl'>SP | Vigo</p>
+        <p className='text-2xl'>
+          {record.country} | {record.city}
+        </p>
         <div className='my-10'>
           <Link
             href={"#"}
