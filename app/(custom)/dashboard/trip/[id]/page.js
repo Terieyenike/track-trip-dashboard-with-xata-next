@@ -2,6 +2,7 @@ import Header from "@/components/Heading";
 import Link from "next/link";
 import Image from "next/image";
 import { getXataClient } from "@/src/xata";
+import { capitalizeWords } from "@/utils/capitalizeWords";
 
 const xata = getXataClient();
 
@@ -13,7 +14,7 @@ export default async function Trip({ params }) {
       <Header name={"Trip Details"} />
       <div className='bg-gray-50 p-8 rounded shadow my-4'>
         <p className='text-2xl'>
-          {record.country} | {record.city}
+          {record?.country.toUpperCase()} | {capitalizeWords(record?.city)}
         </p>
         <div className='my-10'>
           <Link

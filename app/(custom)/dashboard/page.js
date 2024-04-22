@@ -4,6 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Heading";
 import { useState, useEffect } from "react";
 import { getTrips } from "@/utils/get-trips";
+import { capitalizeWords } from "@/utils/capitalizeWords";
 
 export const revalidate = 0;
 
@@ -44,24 +45,16 @@ export default function Dashboard() {
       )}
 
       {!loading &&
-        trips.map((trip) => (
+        trips?.map((trip) => (
           <Link href={`dashboard/trip/${trip.id}`} key={trip.id}>
             <div className='bg-gray-50 p-10 rounded shadow my-4 hover:shadow-lg hover:cursor-pointer'>
               <p className='text-lg'>
-                {trip.country ? trip.country.toUpperCase() : ""} |{" "}
-                {trip.city
-                  ? trip.city
-                      .toLowerCase()
-                      .split(" ")
-                      .map(
-                        (word) => word.charAt(0).toUpperCase() + word.slice(1)
-                      )
-                      .join(" ")
-                  : ""}
+                {trip?.country ? trip?.country.toUpperCase() : ""} |{" "}
+                {trip?.city ? capitalizeWords(trip?.city) : ""}
               </p>
               <p className='text-sm pt-4'>
-                <span>{trip.start ? formatDate(trip.start) : ""}</span> to{" "}
-                <span>{trip.end ? formatDate(trip.end) : ""}</span>
+                <span>{trip?.start ? formatDate(trip?.start) : ""}</span> to
+                <span>{trip?.end ? formatDate(trip?.end) : ""}</span>
               </p>
             </div>
           </Link>
