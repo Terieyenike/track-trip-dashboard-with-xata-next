@@ -53,7 +53,7 @@ export default function Dashboard() {
                 {trip?.city ? capitalizeWords(trip?.city) : ""}
               </p>
               <p className='text-sm pt-4'>
-                <span>{trip?.start ? formatDate(trip?.start) : ""}</span> to
+                <span>{trip?.start ? formatDate(trip?.start) : ""}</span>{" "}
                 <span>{trip?.end ? formatDate(trip?.end) : ""}</span>
               </p>
             </div>
