@@ -5,6 +5,7 @@ import Header from "@/components/Heading";
 import { useState, useEffect } from "react";
 import { getTrips } from "@/utils/get-trips";
 import { capitalizeWords } from "@/utils/capitalizeWords";
+import { formatDate } from "@/utils/date";
 
 export const revalidate = 0;
 
@@ -26,14 +27,6 @@ export default function Dashboard() {
 
     fetchTrips();
   }, []);
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      month: "long",
-      day: "numeric",
-    });
-  };
 
   return (
     <>
