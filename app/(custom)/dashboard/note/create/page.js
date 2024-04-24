@@ -1,77 +1,172 @@
 "use client";
 
 import Header from "@/components/Heading";
-import { getTrips } from "@/utils/get-trips";
-import { notesData } from "@/utils/api";
-import { useState, useEffect } from "react";
+import { notesData } from "@/utils/notes-data";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const defaultFormFields = {
-  city: "",
   name: "",
-  img: "",
   description: "",
-  rating: "",
   type: "",
+  rating: 1,
+  img: null,
 };
 
 export default function NoteForm() {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { city, name, description, type, rating, img } = formFields;
-  const [trips, setTrips] = useState([]);
-
-  useEffect(() => {
-    const fetchTrips = async () => {
-      try {
-        const tripsData = await getTrips();
-        setTrips(JSON.parse(tripsData));
-      } catch (error) {
-        console.error("Error fetching trips:", error);
-      }
-    };
-
-    fetchTrips();
-  }, []);
+  const { name, description, type, rating, img } = formFields;
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    console.log(city);
-    await notesData(city);
-    resetFormFields;
+  const submit = async () => {
+    await notesData(name, description, type, rating, img.type);
+    resetFormFields();
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormFields({ ...formFields, [name]: value });
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      if (validateForm()) {
+        await submit();
+        toast.success("Notes data stored successfully");
+      }
+    } catch (error) {
+      toast.error("Please fill out all fields");
+    }
   };
+
+  const validateForm = () => {
+    return (
+      name.trim() !== "" &&
+      description.trim() !== "" &&
+      type.trim() !== "" &&
+      img !== null
+    );
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value, files } = event.target;
+    if (name === "img") {
+      const fileName = files[0].name;
+      console.log("Uploaded file name:", fileName);
+      setFormFields({ ...formFields, [name]: files[0] });
+    } else {
+      setFormFields({ ...formFields, [name]: value });
+    }
+  };
+
+  const experiences = [
+    { label: "Event", value: "Event" },
+    { label: "Dining", value: "Dining" },
+    { label: "Experience", value: "Experience" },
+    { label: "General", value: "General" },
+  ];
 
   return (
     <>
       <Header name={"Note Form"} />
       <form onSubmit={handleFormSubmit}>
         <div>
-          <label htmlFor='city' className='block text-gray-700 font-bold mb-2'>
-            Trip
+          <label htmlFor='name' className='block text-gray-700 font-bold mb-2'>
+            Name
+            <span>*</span>
+          </label>
+          <input
+            type='text'
+            maxLength={100}
+            id='name'
+            name='name'
+            value={name}
+            onChange={handleInputChange}
+            required
+            placeholder='place visited'
+            className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none'
+          />
+        </div>
+        <div>
+          <label
+            htmlFor='description'
+            className='block text-gray-700 font-bold mb-2'>
+            Description
+            <span>*</span>
+          </label>
+          <textarea
+            name='description'
+            id='description'
+            value={description}
+            onChange={handleInputChange}
+            required
+            placeholder='enter a description'
+            cols='45'
+            rows='10'
+            className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none resize-none'
+          />
+        </div>
+        <div>
+          <label htmlFor='type' className='block text-gray-700 font-bold mb-2'>
+            Type
             <span>*</span>
           </label>
           <select
-            value={city}
-            name='city'
-            id='city'
-            onChange={handleChange}
+            name='type'
+            id='type'
+            value={type}
+            onChange={handleInputChange}
             className='block w-full py-2 px-4 mt-3 mb-5 border border-gray-300 rounded-lg text-gray-700 bg-white focus:outline-none leading-normal'>
             <option value='' disabled className='text-gray-500'>
               ---------
             </option>
-            {trips.map((trip) => (
-              <option key={trip.id} value={trip.city}>
-                {trip.city}
+            {experiences.map((experience, index) => (
+              <option value={experience.label} key={index}>
+                {experience.value}
               </option>
             ))}
           </select>
+        </div>
+        <div>
+          <label htmlFor='img' className='block text-gray-700 font-bold mb-2'>
+            Img
+          </label>
+          <input
+            type='file'
+            id='img'
+            name='img'
+            onChange={handleInputChange}
+            accept='image/*'
+            className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none'
+          />
+        </div>
+        {img && (
+          <div>
+            <p>Selected Image:</p>
+            <img
+              src={URL.createObjectURL(img)}
+              alt='Selected'
+              style={{ maxWidth: "300px" }}
+            />
+          </div>
+        )}
+        <div>
+          <label
+            htmlFor='rating'
+            className='block text-gray-700 font-bold mb-2'>
+            Rating
+            <span>*</span>
+          </label>
+          <input
+            type='number'
+            name='rating'
+            id='rating'
+            value={rating}
+            min={0}
+            max={5}
+            onChange={handleInputChange}
+            className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none'
+          />
         </div>
         <button
           type='submit'
@@ -79,6 +174,7 @@ export default function NoteForm() {
           Save
         </button>
       </form>
+      <ToastContainer theme='dark' />
     </>
   );
 }

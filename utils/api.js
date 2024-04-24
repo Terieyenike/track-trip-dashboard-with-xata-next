@@ -12,13 +12,3 @@ export async function submitTripData(city, country, start, end) {
     end: end,
   });
 }
-
-export async function notesData(name, description, img, rating, type) {
-  await xata.db.notes.create({
-    name: name,
-    description: description,
-    img: img,
-    rating: rating,
-    type: type,
-  });
-}
