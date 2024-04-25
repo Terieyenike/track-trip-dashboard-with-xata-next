@@ -117,6 +117,7 @@ export default function TripForm() {
             onChange={handleInputChange}
             id='start'
             min={today}
+            placeholder='DD-MM-YYYY'
             className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none'
           />
         </div>
@@ -133,6 +134,7 @@ export default function TripForm() {
             min={tomorrowFormatted}
             max={"2050-12-31"}
             id='end'
+            placeholder='DD-MM-YYYY'
             className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none'
           />
         </div>
