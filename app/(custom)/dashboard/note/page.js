@@ -4,6 +4,7 @@ import { apiNoteDetail } from "@/utils/api-note-detail";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import NewNote from "@/components/Newnote";
 
 export const revalidate = 0;
 
@@ -62,7 +63,7 @@ export default function Note() {
           ))}
           <Link href={"/dashboard/note/create/"}>
             <div className='border-2 border-dashed rounded-lg hover:shadow flex justify-center items-center'>
-              <p className='text-gray-500'>New Note +</p>
+              <NewNote />
             </div>
           </Link>
         </div>
