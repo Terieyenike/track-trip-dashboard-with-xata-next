@@ -32,7 +32,9 @@ export default function Dashboard() {
     <>
       <Header name={"My Trips"} />
       {loading ? (
-        <p>Loading...</p>
+        <div className='flex justify-center pt-16'>
+          <p>Loading...</p>
+        </div>
       ) : (
         trips.length === 0 && <p>No travel memories found</p>
       )}

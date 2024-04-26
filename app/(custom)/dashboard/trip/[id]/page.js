@@ -22,11 +22,9 @@ export default async function Trip({ params }) {
             className='px-7 py-2 bg-gray-300 rounded mr-4 hover:bg-gray-200'>
             Edit
           </Link>
-          <Link
-            href={"#"}
-            className='px-7 py-2 bg-red-300 rounded hover:bg-red-200 hover:cursor-pointer'>
+          <button className='px-7 py-2 bg-red-300 rounded hover:bg-red-200 hover:cursor-pointer'>
             Delete
-          </Link>
+          </button>
         </div>
         <h3 className='text-xl pb-4'>Notes:</h3>
         <div className='flex flex-wrap gap-2'>
