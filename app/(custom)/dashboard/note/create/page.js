@@ -5,6 +5,8 @@ import { notesData } from "@/utils/notes-data";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const defaultFormFields = {
   name: "",
@@ -18,13 +20,18 @@ export default function NoteForm() {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { name, description, type, rating, img } = formFields;
 
-  const resetFormFields = () => {
-    setFormFields(defaultFormFields);
-  };
+  const router = useRouter();
 
   const submit = async () => {
-    await notesData(name, description, type, rating, img.type);
-    resetFormFields();
+    const { uploadUrl } = await notesData(
+      name,
+      description,
+      type,
+      rating,
+      img.type
+    );
+    await fetch(uploadUrl, { method: "PUT", body: img });
+    router.push("/dashboard/note");
   };
 
   const handleFormSubmit = async (event) => {
@@ -32,7 +39,7 @@ export default function NoteForm() {
     try {
       if (validateForm()) {
         await submit();
-        toast.success("Notes data stored successfully");
+        console.log("Notes data stored successfully");
       }
     } catch (error) {
       toast.error("Please fill out all fields");
@@ -51,8 +58,6 @@ export default function NoteForm() {
   const handleInputChange = (event) => {
     const { name, value, files } = event.target;
     if (name === "img") {
-      const fileName = files[0].name;
-      console.log("Uploaded file name:", fileName);
       setFormFields({ ...formFields, [name]: files[0] });
     } else {
       setFormFields({ ...formFields, [name]: value });
@@ -137,17 +142,24 @@ export default function NoteForm() {
             name='img'
             onChange={handleInputChange}
             accept='image/*'
-            className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none'
+            className='py-2 mb-5 mt-3 text-gray-700'
           />
         </div>
         {img && (
           <div>
-            <p>Selected Image:</p>
-            <img
+            <p className='mb-3'>Selected Image:</p>
+            <Image
+              src={URL.createObjectURL(img)}
+              width={300}
+              height={300}
+              alt='exciting destination'
+              className='rounded-md shadow-md mb-5'
+            />
+            {/* <img
               src={URL.createObjectURL(img)}
               alt='Selected'
               style={{ maxWidth: "300px" }}
-            />
+            /> */}
           </div>
         )}
         <div>
