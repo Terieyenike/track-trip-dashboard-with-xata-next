@@ -39,7 +39,7 @@ export default function Dashboard() {
 
       {!loading &&
         trips?.map((trip) => (
-          <Link href={`dashboard/trip/${trip.id}`} key={trip.id}>
+          <Link href={`/dashboard/trip/${trip.id}`} key={trip.id}>
             <div className='bg-gray-50 p-10 rounded shadow my-4 hover:shadow-lg hover:cursor-pointer'>
               <p className='text-lg'>
                 {trip?.country ? trip?.country.toUpperCase() : ""} |{" "}
