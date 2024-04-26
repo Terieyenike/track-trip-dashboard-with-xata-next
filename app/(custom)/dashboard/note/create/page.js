@@ -155,11 +155,6 @@ export default function NoteForm() {
               alt='exciting destination'
               className='rounded-md shadow-md mb-5'
             />
-            {/* <img
-              src={URL.createObjectURL(img)}
-              alt='Selected'
-              style={{ maxWidth: "300px" }}
-            /> */}
           </div>
         )}
         <div>
