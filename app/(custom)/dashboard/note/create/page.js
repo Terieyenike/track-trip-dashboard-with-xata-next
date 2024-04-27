@@ -153,7 +153,7 @@ export default function NoteForm() {
               width={300}
               height={300}
               alt='exciting destination'
-              className='rounded-md shadow-md mb-5'
+              className='rounded-md shadow-md mb-5 object-contain'
             />
           </div>
         )}

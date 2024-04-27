@@ -2,11 +2,20 @@ import Header from "@/components/Heading";
 import { getXataClient } from "@/src/xata";
 import Link from "next/link";
 import Image from "next/image";
+import { capitalizeWords } from "@/utils/capitalizeWords";
 
 const xata = getXataClient();
 
 export default async function NoteDetail({ params }) {
   const record = await xata.db.notes.filter({ id: params.id }).getFirst();
+  const descriptionParagraphs = record.description
+    .split("\n")
+    .map((paragraph, index) => (
+      <p key={index} className='mb-2'>
+        {paragraph}
+      </p>
+    ));
+
   return (
     <>
       <Header name={"Note Detail"} />
@@ -20,12 +29,15 @@ export default async function NoteDetail({ params }) {
           Delete
         </button>
       </div>
-      <div className='bg-gray-50 p-8 rounded shadow hover:shadow-md my-4 flex flex-col md:flex-row'>
-        <div className='md:w-1/2 md:mr-8'>
-          <h2 className='text-2xl font-semibold mb-4'>{record.name}</h2>
-          <p className='mb-2'>
-            <span className='font-bold'>Description</span>: {record.description}
-          </p>
+      <div className='bg-gray-50 p-8 rounded shadow hover:shadow-md my-4 md:flex xl:flex-row flex-col'>
+        <div className='xl:w-1/2 xl:flex-grow xl:mr-8'>
+          <h2 className='text-2xl font-semibold mb-4'>
+            {capitalizeWords(record.name)}
+          </h2>
+          <div className='mb-2'>
+            <span className='font-bold'>Description</span>:
+            {descriptionParagraphs}
+          </div>
           <p className='mb-2'>
             <span className='font-bold'>Type</span>: {record.type}
           </p>
@@ -33,13 +45,13 @@ export default async function NoteDetail({ params }) {
             <span className='font-bold'>Rating</span>: {record.rating}/5
           </p>
         </div>
-        <div className='md:w-1/2 md:ml-8'>
+        <div className='xl:w-1/2 xl:ml-8'>
           <Image
             src={record.img.url}
             loading='lazy'
             width={300}
             height={300}
-            alt='record.name'
+            alt={record.name}
             className='w-full h-auto'
           />
         </div>
