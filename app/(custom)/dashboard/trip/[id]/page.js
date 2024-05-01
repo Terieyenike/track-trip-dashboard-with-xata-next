@@ -7,7 +7,7 @@ import { capitalizeWords } from "@/utils/capitalizeWords";
 const xata = getXataClient();
 
 export default async function Trip({ params }) {
-  const record = await xata.db.trips.filter({ id: params.id }).getFirst();
+  const record = await xata.db.trips.read({ id: params.id });
 
   return (
     <>
@@ -18,7 +18,7 @@ export default async function Trip({ params }) {
         </p>
         <div className='my-10'>
           <Link
-            href={"#"}
+            href={`/dashboard/trip/${record.id}/update`}
             className='px-7 py-2 bg-gray-300 rounded mr-4 hover:bg-gray-200'>
             Edit
           </Link>
