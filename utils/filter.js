@@ -4,6 +4,6 @@ import { getXataClient } from "@/src/xata";
 
 const xata = getXataClient();
 
-export async function filter(id) {
-  await xata.db.notes.read(id);
+export async function filter(params) {
+  return xata.db.notes.read({ id: params.id });
 }

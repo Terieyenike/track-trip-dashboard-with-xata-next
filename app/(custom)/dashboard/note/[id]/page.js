@@ -1,15 +1,14 @@
-"use client";
-
 import Header from "@/components/Heading";
 import Link from "next/link";
 import Image from "next/image";
 import { capitalizeWords } from "@/utils/capitalizeWords";
-import { filter } from "@/utils/filter";
+import { getXataClient } from "@/src/xata";
 
-export default function NoteDetail({ params }) {
-  const record = async () => {
-    await filter({ id: params.id });
-  };
+const xata = getXataClient();
+
+export default async function NoteDetail({ params }) {
+  const record = await xata.db.notes.read({ id: params.id });
+
   const descriptionParagraphs = record.description
     .split("\n")
     .map((paragraph, index) => (

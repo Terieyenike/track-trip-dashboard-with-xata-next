@@ -1,0 +1,71 @@
+✨ A newer version of @xata.io/cli is now available: 0.15.12. You are currently using version: 0.15.11
+{
+  "tables": [
+    {
+      "name": "trips",
+      "columns": [
+        {
+          "name": "city",
+          "type": "string"
+        },
+        {
+          "name": "country",
+          "type": "string"
+        },
+        {
+          "name": "start",
+          "type": "string",
+          "notNull": true,
+          "defaultValue": "2024-04-01"
+        },
+        {
+          "name": "end",
+          "type": "string",
+          "defaultValue": "2024-04-18"
+        }
+      ],
+      "revLinks": [
+        {
+          "column": "trip",
+          "table": "notes"
+        }
+      ]
+    },
+    {
+      "name": "notes",
+      "columns": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "text"
+        },
+        {
+          "name": "img",
+          "type": "file",
+          "file": {
+            "defaultPublicAccess": true
+          }
+        },
+        {
+          "name": "rating",
+          "type": "int"
+        },
+        {
+          "name": "trip",
+          "type": "link",
+          "link": {
+            "table": "trips"
+          }
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "defaultValue": ""
+        }
+      ]
+    }
+  ]
+}
