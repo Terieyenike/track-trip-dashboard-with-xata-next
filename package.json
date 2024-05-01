@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@opentelemetry/api": "^1.1.0",
     "@xata.io/client": "0.29.4",
     "next": "14.1.4",
     "react": "^18",
