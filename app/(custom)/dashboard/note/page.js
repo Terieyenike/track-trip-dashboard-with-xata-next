@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import NewNote from "@/components/Newnote";
+import { capitalizeWords } from "@/utils/capitalizeWords";
 
 export const revalidate = 0;
 
@@ -52,7 +53,7 @@ export default function Note() {
                 />
                 <div className='flex-grow px-4 py-2'>
                   <p className='text-center mt-3 text-lg font-bold truncate'>
-                    {note.trip.city || "Unknown city"}
+                    {capitalizeWords(note.trip?.city)}
                   </p>
                   <p className='text-center mt-1 text-lg truncate'>
                     {note.name}
