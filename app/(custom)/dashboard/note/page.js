@@ -25,6 +25,7 @@ export default function Note() {
     };
     fetchNotes();
   }, []);
+
   return (
     <>
       <h3 className='font-bold text-xl pb-4'>Notes:</h3>
@@ -40,17 +41,19 @@ export default function Note() {
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
           {notes.map((note) => (
             <Link href={`/dashboard/note/${note.id}`} key={note.id}>
-              <div className='border rounded-lg pb-4 shadow hover:shadow-lg flex flex-col'>
+              <div className='border rounded-lg pb-4 shadow hover:shadow-lg flex flex-col overflow-hidden'>
                 <Image
                   src={note.img.url}
-                  loading='lazy'
+                  priority={true}
                   width={300}
                   height={300}
                   alt={note.name}
                   className='w-full rounded-t-md object-cover h-48'
                 />
                 <div className='flex-grow px-4 py-2'>
-                  <p className='text-center mt-3 text-lg font-bold'>Kpalime</p>
+                  <p className='text-center mt-3 text-lg font-bold truncate'>
+                    {note.trip.city || "Unknown city"}
+                  </p>
                   <p className='text-center mt-1 text-lg truncate'>
                     {note.name}
                   </p>
