@@ -33,7 +33,7 @@ export default function Note() {
           <p>Loading...</p>
         </div>
       ) : (
-        notes.length === 0 && <p>No notes found</p>
+        notes.length === 0 && <p className='mb-5'>No notes found</p>
       )}
 
       {!loading && (
