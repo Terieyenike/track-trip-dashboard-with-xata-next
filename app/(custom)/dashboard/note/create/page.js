@@ -2,25 +2,46 @@
 
 import Header from "@/components/Heading";
 import { notesData } from "@/utils/notes-data";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { apiNoteDetail } from "@/utils/api-note-detail";
 
 const defaultFormFields = {
   name: "",
   description: "",
   type: "",
+  // trip: "",
   rating: 1,
   img: null,
 };
 
 export default function NoteForm() {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { name, description, type, rating, img } = formFields;
-
+  const {
+    name,
+    description,
+    type,
+    rating,
+    img,
+    // trip
+  } = formFields;
+  const [notes, setNotes] = useState([]);
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const notesData = await apiNoteDetail();
+        setNotes(JSON.parse(notesData));
+      } catch (error) {
+        console.log("Error fetching notes", error);
+      }
+    };
+    fetchNotes();
+  }, []);
 
   const submit = async () => {
     const { uploadUrl } = await notesData(
@@ -29,6 +50,7 @@ export default function NoteForm() {
       type,
       rating,
       img.type
+      // trip.city
     );
     await fetch(uploadUrl, { method: "PUT", body: img });
     router.push("/dashboard/note");
@@ -51,6 +73,7 @@ export default function NoteForm() {
       name.trim() !== "" &&
       description.trim() !== "" &&
       type.trim() !== "" &&
+      // trip.trim() !== "" &&
       img !== null
     );
   };
@@ -75,6 +98,27 @@ export default function NoteForm() {
     <>
       <Header name={"Note Form"} />
       <form onSubmit={handleFormSubmit}>
+        {/* <div>
+          <label htmlFor='type' className='block text-gray-700 font-bold mb-2'>
+            Trip
+            <span>*</span>
+          </label>
+          <select
+            name='trip'
+            id='trip'
+            value={trip}
+            onChange={handleInputChange}
+            className='block w-full py-2 px-4 mt-3 mb-5 border border-gray-300 rounded-lg text-gray-700 bg-white focus:outline-none leading-normal'>
+            <option value='' disabled className='text-gray-500'>
+              ---------
+            </option>
+            {notes.map((note) => (
+              <option value={note.trip?.city} key={note.id}>
+                {note.trip?.city}
+              </option>
+            ))}
+          </select>
+        </div> */}
         <div>
           <label htmlFor='name' className='block text-gray-700 font-bold mb-2'>
             Name
@@ -150,6 +194,7 @@ export default function NoteForm() {
             <p className='mb-3'>Selected Image:</p>
             <Image
               src={URL.createObjectURL(img)}
+              priority={true}
               width={300}
               height={300}
               alt='exciting destination'

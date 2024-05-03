@@ -9,3 +9,8 @@ export async function filter(params) {
 
   return data;
 }
+
+export async function filterTrip(params) {
+  const data = await xata.db.trips.read({ id: params.id });
+  return data;
+}

@@ -5,9 +5,21 @@ export function formatDate(dateString) {
     day: "numeric",
   };
   const day = date.getDate();
-  const suffix = (day) =>
-    (day >= 11 && day <= 13) || day % 10 > 3
-      ? "th"
-      : ["st", "nd", "rd"][(day % 10) - 1];
+  const suffix = (day) => {
+    if (day >= 11 && day <= 13) {
+      return "th";
+    } else {
+      switch (day % 10) {
+        case 1:
+          return "st";
+        case 2:
+          return "nd";
+        case 3:
+          return "rd";
+        default:
+          return "th";
+      }
+    }
+  };
   return `${date.toLocaleDateString("en-US", options)}${suffix(day)}`;
 }

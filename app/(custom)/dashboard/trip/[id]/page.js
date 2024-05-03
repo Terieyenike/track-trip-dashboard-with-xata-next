@@ -1,14 +1,12 @@
 import Header from "@/components/Heading";
 import Link from "next/link";
 import Image from "next/image";
-import { getXataClient } from "@/src/xata";
 import { capitalizeWords } from "@/utils/capitalizeWords";
-
-const xata = getXataClient();
+import BtnDelTrip from "@/components/BtnDelTrip";
+import { filterTrip } from "@/utils/filter";
 
 export default async function Trip({ params }) {
-  const record = await xata.db.trips.read({ id: params.id });
-
+  const record = await filterTrip(params);
   return (
     <>
       <Header name={"Trip Details"} />
@@ -22,9 +20,7 @@ export default async function Trip({ params }) {
             className='px-7 py-2 bg-gray-300 rounded mr-4 hover:bg-gray-200'>
             Edit
           </Link>
-          <button className='px-7 py-2 bg-red-300 rounded hover:bg-red-200 hover:cursor-pointer'>
-            Delete
-          </button>
+          <BtnDelTrip id={record.id} />
         </div>
         <h3 className='text-xl pb-4'>Notes:</h3>
         <div className='flex flex-wrap gap-2'>

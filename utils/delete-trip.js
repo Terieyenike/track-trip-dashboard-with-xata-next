@@ -4,7 +4,8 @@ import { getXataClient } from "@/src/xata";
 
 const xata = getXataClient();
 
-export async function deleteNote(id) {
-  const record = await xata.db.notes.delete(id);
+export async function deleteTrip(id) {
+  const record = await xata.db.trips.delete(id);
+
   console.log(record);
 }
