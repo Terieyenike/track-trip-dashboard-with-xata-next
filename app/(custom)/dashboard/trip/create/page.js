@@ -113,7 +113,7 @@ export default function TripForm() {
           <input
             type='date'
             name='start'
-            value={start}
+            value={start || today}
             onChange={handleInputChange}
             id='start'
             min={today}
@@ -130,7 +130,7 @@ export default function TripForm() {
             type='date'
             name='end'
             onChange={handleInputChange}
-            value={end}
+            value={end || tomorrowFormatted}
             min={tomorrowFormatted}
             max={"2050-12-31"}
             id='end'
