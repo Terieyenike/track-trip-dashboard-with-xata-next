@@ -1,4 +1,6 @@
 export function capitalizeWords(str) {
+  if (!str) return "";
+
   return str
     .toLowerCase()
     .split(/\s+|-/)

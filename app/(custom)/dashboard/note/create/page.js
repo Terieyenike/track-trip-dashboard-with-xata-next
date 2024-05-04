@@ -1,34 +1,29 @@
 "use client";
 
 import Header from "@/components/Heading";
-import { notesData } from "@/utils/notes-data";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { notesData } from "@/utils/notes-data";
 import { apiNoteDetail } from "@/utils/api-note-detail";
+import { getTrips } from "@/utils/get-trips";
 
 const defaultFormFields = {
   name: "",
   description: "",
   type: "",
-  // trip: "",
+  trip: "",
   rating: 1,
   img: null,
 };
 
 export default function NoteForm() {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const {
-    name,
-    description,
-    type,
-    rating,
-    img,
-    // trip
-  } = formFields;
+  const { name, description, type, rating, img, trip } = formFields;
   const [notes, setNotes] = useState([]);
+  const [trips, setTrips] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -37,10 +32,19 @@ export default function NoteForm() {
         const notesData = await apiNoteDetail();
         setNotes(JSON.parse(notesData));
       } catch (error) {
-        console.log("Error fetching notes", error);
+        console.error("Error fetching notes", error);
+      }
+    };
+    const fetchTrips = async () => {
+      try {
+        const tripsData = await getTrips();
+        setTrips(JSON.parse(tripsData));
+      } catch (error) {
+        console.error("Error fetching trips", error);
       }
     };
     fetchNotes();
+    fetchTrips();
   }, []);
 
   const submit = async () => {
@@ -49,8 +53,8 @@ export default function NoteForm() {
       description,
       type,
       rating,
-      img.type
-      // trip.city
+      img.type,
+      trip.id
     );
     await fetch(uploadUrl, { method: "PUT", body: img });
     router.push("/dashboard/note");
@@ -73,7 +77,7 @@ export default function NoteForm() {
       name.trim() !== "" &&
       description.trim() !== "" &&
       type.trim() !== "" &&
-      // trip.trim() !== "" &&
+      trip.trim() !== "" &&
       img !== null
     );
   };
@@ -98,7 +102,7 @@ export default function NoteForm() {
     <>
       <Header name={"Note Form"} />
       <form onSubmit={handleFormSubmit}>
-        {/* <div>
+        <div>
           <label htmlFor='type' className='block text-gray-700 font-bold mb-2'>
             Trip
             <span>*</span>
@@ -112,13 +116,13 @@ export default function NoteForm() {
             <option value='' disabled className='text-gray-500'>
               ---------
             </option>
-            {notes.map((note) => (
-              <option value={note.trip?.city} key={note.id}>
-                {note.trip?.city}
+            {trips.map((trip) => (
+              <option value={trip?.city} key={trip.id}>
+                {trip?.city}
               </option>
             ))}
           </select>
-        </div> */}
+        </div>
         <div>
           <label htmlFor='name' className='block text-gray-700 font-bold mb-2'>
             Name
