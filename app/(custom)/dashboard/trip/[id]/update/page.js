@@ -6,6 +6,8 @@ import { Edit } from "@/utils/edit";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const revalidate = 0;
 
@@ -36,12 +38,30 @@ export default function Update({ params }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      if (new Date(end) <= new Date(start)) {
+        toast.error("End date must be after the start date.");
+        return;
+      }
       await Edit(params.id, city, start, end, country);
       router.push("/dashboard");
     } catch (error) {
       console.error("Error updating trip data:", error);
     }
   };
+
+  const handleStartChange = (event) => {
+    setStart(event.target.value);
+  };
+
+  const handleEndChange = (event) => {
+    setEnd(event.target.value);
+  };
+
+  const today = new Date().toISOString().split("T")[0];
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const tomorrowFormatted = tomorrow.toISOString().split("T")[0];
 
   return (
     <section>
@@ -91,7 +111,8 @@ export default function Update({ params }) {
             type='date'
             name='start'
             value={start}
-            onChange={(e) => setStart(e.target.value)}
+            min={today}
+            onChange={handleStartChange}
             id='start'
             placeholder='put the start date here'
             className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none'
@@ -106,7 +127,8 @@ export default function Update({ params }) {
             type='date'
             name='end'
             value={end}
-            onChange={(e) => setEnd(e.target.value)}
+            min={tomorrowFormatted}
+            onChange={handleEndChange}
             id='end'
             className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none'
           />
@@ -125,6 +147,7 @@ export default function Update({ params }) {
           </Link>
         </div>
       </form>
+      <ToastContainer theme='dark' />
     </section>
   );
 }
