@@ -6,7 +6,7 @@ import { filter } from "@/utils/filter";
 import BtnDel from "@/components/BtnDel";
 
 export default async function NoteDetail({ params }) {
-  const record = await filter(params);
+  const { record } = await filter(params);
 
   const noteInfo = (
     <div className='bg-gray-50 p-8 rounded shadow hover:shadow-md my-4 md:flex xl:flex-row flex-col'>
@@ -14,6 +14,7 @@ export default async function NoteDetail({ params }) {
         <h2 className='text-2xl font-semibold mb-4'>
           {capitalizeWords(record.name)}
         </h2>
+
         <div className='mb-2'>
           <span className='font-bold'>Description</span>:
           {record.description.split("\n").map((paragraph, index) => (

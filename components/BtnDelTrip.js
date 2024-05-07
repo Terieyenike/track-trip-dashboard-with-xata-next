@@ -5,13 +5,13 @@ import { deleteNote } from "@/utils/delete";
 import { useRouter } from "next/navigation";
 import ConfirmationDialog from "./ConfirmationDialog";
 
-export default function BtnDelTrip({ id }) {
+export default function BtnDelTrip({ id, note }) {
   const router = useRouter();
-
+  console.log(note);
   const handleDelete = async () => {
     try {
       await deleteTrip(id);
-      await deleteNote(id);
+      await deleteNote(note);
       router.push("/dashboard");
     } catch (error) {
       console.error("Error deleting trip", error);

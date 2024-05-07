@@ -1,8 +1,8 @@
 "use client";
 
 import Header from "@/components/Heading";
-import { filterTrip } from "@/utils/filter";
 import { Edit } from "@/utils/edit";
+import { filterTrip } from "@/utils/filterTrip";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -22,11 +22,11 @@ export default function Update({ params }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const record = await filterTrip(params);
-        setCity(record.city);
-        setCountry(record.country);
-        setStart(record.start);
-        setEnd(record.end);
+        const { data } = await filterTrip(params);
+        setCity(data.city);
+        setCountry(data.country);
+        setStart(data.start);
+        setEnd(data.end);
       } catch (error) {
         console.error("Error fetching trip data:", error);
       }

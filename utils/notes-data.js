@@ -12,7 +12,7 @@ export async function notesData(
   mediaType,
   trip
 ) {
-  // const tripId = String(id);
+  console.log({ name, description, type, rating, mediaType, trip });
   const record = await xata.db.notes.create(
     {
       name: name,
@@ -24,6 +24,5 @@ export async function notesData(
     },
     ["*", "img.uploadUrl"]
   );
-  console.log(record);
   return { uploadUrl: record.img?.uploadUrl };
 }

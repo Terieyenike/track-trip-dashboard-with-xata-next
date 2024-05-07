@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { notesData } from "@/utils/notes-data";
-import { apiNoteDetail } from "@/utils/api-note-detail";
+// import { apiNoteDetail } from "@/utils/api-note-detail";
 import { getTrips } from "@/utils/get-trips";
 
 const defaultFormFields = {
@@ -22,19 +22,11 @@ const defaultFormFields = {
 export default function NoteForm() {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { name, description, type, rating, img, trip } = formFields;
-  const [notes, setNotes] = useState([]);
+
   const [trips, setTrips] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchNotes = async () => {
-      try {
-        const notesData = await apiNoteDetail();
-        setNotes(JSON.parse(notesData));
-      } catch (error) {
-        console.error("Error fetching notes", error);
-      }
-    };
     const fetchTrips = async () => {
       try {
         const tripsData = await getTrips();
@@ -43,9 +35,18 @@ export default function NoteForm() {
         console.error("Error fetching trips", error);
       }
     };
-    fetchNotes();
     fetchTrips();
   }, []);
+
+  const validateForm = () => {
+    return (
+      name.trim() !== "" &&
+      description.trim() !== "" &&
+      type.trim() !== "" &&
+      trip.trim() !== "" &&
+      img !== null
+    );
+  };
 
   const submit = async () => {
     const { uploadUrl } = await notesData(
@@ -54,7 +55,7 @@ export default function NoteForm() {
       type,
       rating,
       img.type,
-      trip.id
+      trip
     );
     await fetch(uploadUrl, { method: "PUT", body: img });
     router.push("/dashboard/note");
@@ -70,16 +71,6 @@ export default function NoteForm() {
     } catch (error) {
       toast.error("Please fill out all fields");
     }
-  };
-
-  const validateForm = () => {
-    return (
-      name.trim() !== "" &&
-      description.trim() !== "" &&
-      type.trim() !== "" &&
-      trip.trim() !== "" &&
-      img !== null
-    );
   };
 
   const handleInputChange = (event) => {
