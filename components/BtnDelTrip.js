@@ -7,7 +7,7 @@ import ConfirmationDialog from "./ConfirmationDialog";
 
 export default function BtnDelTrip({ id, note }) {
   const router = useRouter();
-  console.log(note);
+
   const handleDelete = async () => {
     try {
       await deleteTrip(id);

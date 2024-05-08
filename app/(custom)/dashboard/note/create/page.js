@@ -1,13 +1,12 @@
 "use client";
 
-import Header from "@/components/Heading";
 import { useState, useEffect } from "react";
+import Header from "@/components/Heading";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { notesData } from "@/utils/notes-data";
-// import { apiNoteDetail } from "@/utils/api-note-detail";
 import { getTrips } from "@/utils/get-trips";
 
 const defaultFormFields = {
@@ -24,6 +23,7 @@ export default function NoteForm() {
   const { name, description, type, rating, img, trip } = formFields;
 
   const [trips, setTrips] = useState([]);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -38,6 +38,11 @@ export default function NoteForm() {
     fetchTrips();
   }, []);
 
+  const getTripIdByName = (tripName) => {
+    const selectedTrip = trips.find((trip) => trip.city === tripName);
+    return selectedTrip ? selectedTrip.id : null;
+  };
+
   const validateForm = () => {
     return (
       name.trim() !== "" &&
@@ -49,13 +54,14 @@ export default function NoteForm() {
   };
 
   const submit = async () => {
+    const tripId = getTripIdByName(trip);
     const { uploadUrl } = await notesData(
       name,
       description,
       type,
       rating,
       img.type,
-      trip
+      tripId
     );
     await fetch(uploadUrl, { method: "PUT", body: img });
     router.push("/dashboard/note");

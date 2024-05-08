@@ -10,15 +10,14 @@ export async function notesData(
   type,
   rating,
   mediaType,
-  trip
+  tripId
 ) {
-  console.log({ name, description, type, rating, mediaType, trip });
   const record = await xata.db.notes.create(
     {
       name: name,
       description: description,
       type: type,
-      trip: trip,
+      trip: tripId,
       rating: parseInt(rating),
       img: { mediaType, base64Content: "" },
     },
