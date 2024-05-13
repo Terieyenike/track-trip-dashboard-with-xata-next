@@ -19,7 +19,7 @@ export async function notesData(
       type: type,
       trip: tripId,
       rating: parseInt(rating),
-      img: { mediaType, base64Content: "" },
+      img: { mediaType, base64Content: "", name: name },
     },
     ["*", "img.uploadUrl"]
   );

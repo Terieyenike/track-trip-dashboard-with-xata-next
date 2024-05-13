@@ -7,6 +7,7 @@ import BtnDel from "@/components/BtnDel";
 
 export default async function NoteDetail({ params }) {
   const { record } = await filter(params);
+  // console.log(JSON.parse(JSON.stringify(record)));
 
   const noteInfo = (
     <div className='bg-gray-50 p-8 rounded shadow hover:shadow-md my-4 md:flex xl:flex-row flex-col'>

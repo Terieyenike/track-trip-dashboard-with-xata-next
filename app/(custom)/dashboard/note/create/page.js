@@ -111,7 +111,7 @@ export default function NoteForm() {
             onChange={handleInputChange}
             className='block w-full py-2 px-4 mt-3 mb-5 border border-gray-300 rounded-lg text-gray-700 bg-white focus:outline-none leading-normal'>
             <option value='' disabled className='text-gray-500'>
-              ---------
+              Select pre-existing location
             </option>
             {trips.map((trip) => (
               <option value={trip?.city} key={trip.id}>
@@ -168,7 +168,7 @@ export default function NoteForm() {
             onChange={handleInputChange}
             className='block w-full py-2 px-4 mt-3 mb-5 border border-gray-300 rounded-lg text-gray-700 bg-white focus:outline-none leading-normal'>
             <option value='' disabled className='text-gray-500'>
-              ---------
+              Purpose / type of trip
             </option>
             {experiences.map((experience, index) => (
               <option value={experience.label} key={index}>
