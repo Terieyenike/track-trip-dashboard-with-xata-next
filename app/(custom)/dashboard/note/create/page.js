@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { notesData } from "@/utils/notes-data";
 import { getTrips } from "@/utils/get-trips";
+import { capitalizeWords } from "@/utils/capitalizeWords";
 
 const defaultFormFields = {
   name: "",
@@ -88,7 +89,7 @@ export default function NoteForm() {
     }
   };
 
-  const experiences = [
+  const types = [
     { label: "Event", value: "Event" },
     { label: "Dining", value: "Dining" },
     { label: "Experience", value: "Experience" },
@@ -115,7 +116,7 @@ export default function NoteForm() {
             </option>
             {trips.map((trip) => (
               <option value={trip?.city} key={trip.id}>
-                {trip?.city}
+                {capitalizeWords(trip?.city)}
               </option>
             ))}
           </select>
@@ -170,16 +171,16 @@ export default function NoteForm() {
             <option value='' disabled className='text-gray-500'>
               Purpose / type of trip
             </option>
-            {experiences.map((experience, index) => (
-              <option value={experience.label} key={index}>
-                {experience.value}
+            {types.map((type, index) => (
+              <option value={type.label} key={index}>
+                {type.value}
               </option>
             ))}
           </select>
         </div>
         <div>
           <label htmlFor='img' className='block text-gray-700 font-bold mb-2'>
-            Img
+            Image
           </label>
           <input
             type='file'

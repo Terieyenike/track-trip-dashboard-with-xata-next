@@ -6,18 +6,12 @@ const xata = getXataClient();
 
 export async function filter(params) {
   const record = await xata.db.notes.read({ id: params.id });
-  const { description, id, img, name, rating, trip, type } = record;
 
-  const plainRecord = {
-    description,
-    id,
-    img,
-    name,
-    rating,
-    trip,
-    type,
-  };
+  return { record };
+}
 
-  console.log(plainRecord);
-  return { record, plainRecord };
+export async function filterNote(params) {
+  const record = await xata.db.notes.read({ id: params.id });
+
+  return { record: JSON.parse(JSON.stringify(record)) };
 }
