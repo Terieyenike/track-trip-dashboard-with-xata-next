@@ -41,6 +41,7 @@ export default function NoteForm() {
 
   const getTripIdByName = (tripName) => {
     const selectedTrip = trips.find((trip) => trip.city === tripName);
+    console.log({ select: selectedTrip });
     return selectedTrip ? selectedTrip.id : null;
   };
 
@@ -101,7 +102,7 @@ export default function NoteForm() {
       <Header name={"Note Form"} />
       <form onSubmit={handleFormSubmit}>
         <div>
-          <label htmlFor='type' className='block text-gray-700 font-bold mb-2'>
+          <label htmlFor='trip' className='block text-gray-700 font-bold mb-2'>
             Trip
             <span>*</span>
           </label>

@@ -5,6 +5,8 @@ import { filterNote } from "@/utils/filter";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
+import { editNote } from "@/utils/edit";
 
 export const revalidate = 0;
 
@@ -14,14 +16,22 @@ export default function Update({ params }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
+  const [img, setImg] = useState(null);
+  const [imgFile, setImgFile] = useState(null);
+  const [rating, setRating] = useState(1);
+  const [tripId, setTripId] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { record } = await filterNote(JSON.parse(JSON.stringify(params)));
+
+        setTripId(record.trip);
         setName(record.name);
         setDescription(record.description);
         setType(record.type);
+        setImg(record.img.url);
+        setRating(record.rating);
       } catch (error) {
         console.error("Error fetching note data:", error);
       }
@@ -30,9 +40,37 @@ export default function Update({ params }) {
     fetchData();
   }, [params]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("Form submitted with values:", { name, description, type });
+    try {
+      if (imgFile) {
+        const { uploadUrl } = await editNote(
+          name,
+          description,
+          type,
+          rating,
+          imgFile.type,
+          tripId
+        );
+        await fetch(uploadUrl, { method: "PUT", body: imgFile });
+      } else {
+        await editNote(name, description, type, rating, null, tripId);
+      }
+      router.push("/dashboard/note");
+    } catch (error) {
+      console.error("Error updating note data: ", error);
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setImg(URL.createObjectURL(file));
+      setImgFile(file);
+    } else {
+      setImg(null);
+      setImgFile(null);
+    }
   };
 
   const types = [
@@ -98,8 +136,50 @@ export default function Update({ params }) {
             ))}
           </select>
         </div>
+        <div className='mb-6'>
+          <label htmlFor='img' className='block text-gray-700 font-bold mb-2'>
+            Image
+          </label>
+          <input
+            type='file'
+            id='img'
+            name='img'
+            onChange={handleFileChange}
+            accept='image/*'
+            className='py-2 mb-5 mt-3 text-gray-700'
+          />
 
+          {img && (
+            <Image
+              src={img}
+              width={300}
+              height={300}
+              priority={true}
+              alt='wonderful destination'
+              className='rounded-md shadow-md object-contain'
+            />
+          )}
+        </div>
         <div>
+          <label
+            htmlFor='rating'
+            className='block text-gray-700 font-bold mb-2'>
+            Rating
+            <span>*</span>
+          </label>
+          <input
+            type='number'
+            name='rating'
+            id='rating'
+            value={rating}
+            min={0}
+            max={5}
+            onChange={(event) => setRating(event.target.value)}
+            className='w-full px-4 py-2 border rounded-lg mb-5 mt-3 text-gray-700 bg-white border-gray-300 appearance-none block leading-normal focus:outline-none'
+          />
+        </div>
+
+        <div className='mt-12'>
           <button
             type='submit'
             className='bg-green-400 px-7 py-2 rounded hover:cursor-pointer hover:bg-green-300'>

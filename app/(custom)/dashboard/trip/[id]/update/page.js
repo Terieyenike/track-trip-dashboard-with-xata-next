@@ -22,7 +22,7 @@ export default function Update({ params }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await filterTrip(params);
+        const { data } = await filterTrip(JSON.parse(JSON.stringify(params)));
         setCity(data.city);
         setCountry(data.country);
         setStart(data.start);
@@ -134,7 +134,7 @@ export default function Update({ params }) {
           />
         </div>
 
-        <div>
+        <div className='mt-12'>
           <button
             type='submit'
             className='bg-green-400 px-7 py-2 rounded hover:cursor-pointer hover:bg-green-300'>
