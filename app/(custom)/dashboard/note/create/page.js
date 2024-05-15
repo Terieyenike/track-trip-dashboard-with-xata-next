@@ -32,6 +32,7 @@ export default function NoteForm() {
       try {
         const tripsData = await getTrips();
         setTrips(JSON.parse(tripsData));
+        console.log(tripsData);
       } catch (error) {
         console.error("Error fetching trips", error);
       }

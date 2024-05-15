@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { editNote } from "@/utils/edit";
+import { getTrips } from "@/utils/get-trips";
 
 export const revalidate = 0;
 
@@ -17,45 +18,49 @@ export default function Update({ params }) {
   const [description, setDescription] = useState("");
   const [type, setType] = useState("");
   const [img, setImg] = useState(null);
-  const [imgFile, setImgFile] = useState(null);
   const [rating, setRating] = useState(1);
-  const [tripId, setTripId] = useState("");
+  const [trip, setTrip] = useState("");
+  const [trips, setTrips] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { record } = await filterNote(JSON.parse(JSON.stringify(params)));
-
-        setTripId(record.trip);
         setName(record.name);
         setDescription(record.description);
         setType(record.type);
         setImg(record.img.url);
         setRating(record.rating);
+        // setTrip(record.trip);
       } catch (error) {
         console.error("Error fetching note data:", error);
       }
     };
 
+    const fetchTrips = async () => {
+      try {
+        const tripsData = await getTrips();
+        setTrips(JSON.parse(tripsData));
+      } catch (error) {
+        console.error("Error fetching trips", error);
+      }
+    };
+
     fetchData();
+    fetchTrips();
   }, [params]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      if (imgFile) {
-        const { uploadUrl } = await editNote(
-          name,
-          description,
-          type,
-          rating,
-          imgFile.type,
-          tripId
-        );
-        await fetch(uploadUrl, { method: "PUT", body: imgFile });
-      } else {
-        await editNote(name, description, type, rating, null, tripId);
-      }
+      const { uploadUrl } = await editNote(
+        name,
+        description,
+        type,
+        rating,
+        img.type
+      );
+      await fetch(uploadUrl, { method: "PUT", body: img });
       router.push("/dashboard/note");
     } catch (error) {
       console.error("Error updating note data: ", error);
@@ -66,10 +71,8 @@ export default function Update({ params }) {
     const file = event.target.files[0];
     if (file) {
       setImg(URL.createObjectURL(file));
-      setImgFile(file);
     } else {
       setImg(null);
-      setImgFile(null);
     }
   };
 
@@ -84,6 +87,27 @@ export default function Update({ params }) {
     <section>
       <Header name={"Note Form"} />
       <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor='trip' className='block text-gray-700 font-bold mb-2'>
+            Trip
+            <span>*</span>
+          </label>
+          <select
+            name='trip'
+            id='trip'
+            value={trip}
+            onChange={(event) => setTrip(event.target.value)}
+            className='block w-full py-2 px-4 mt-3 mb-5 border border-gray-300 rounded-lg text-gray-700 bg-white focus:outline-none leading-normal'>
+            <option value='' disabled className='text-gray-500'>
+              Select pre-existing location
+            </option>
+            {trips.map((trip) => (
+              <option value={trip?.city} key={trip.id}>
+                (trip?.city)
+              </option>
+            ))}
+          </select>
+        </div>
         <div>
           <label htmlFor='city' className='block text-gray-700 font-bold mb-2'>
             Name

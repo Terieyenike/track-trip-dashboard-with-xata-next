@@ -48,11 +48,6 @@ export default async function NoteDetail({ params }) {
     <>
       <Header name={"Note Detail"} />
       <div className='flex mb-4'>
-        <Link
-          href={`/dashboard/note/${record.id}/update`}
-          className='px-7 py-2 bg-gray-300 rounded mr-4 hover:bg-gray-200'>
-          Edit
-        </Link>
         <BtnDel id={record.id} />
       </div>
       {noteInfo}
