@@ -32,7 +32,6 @@ export default function NoteForm() {
       try {
         const tripsData = await getTrips();
         setTrips(JSON.parse(tripsData));
-        console.log(tripsData);
       } catch (error) {
         console.error("Error fetching trips", error);
       }
@@ -42,7 +41,6 @@ export default function NoteForm() {
 
   const getTripIdByName = (tripName) => {
     const selectedTrip = trips.find((trip) => trip.city === tripName);
-    console.log({ select: selectedTrip });
     return selectedTrip ? selectedTrip.id : null;
   };
 
