@@ -4,11 +4,6 @@ import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const Metadata = {
-  title: "Dashboard",
-  description: "Showcase your favorable memories",
-};
-
 export default function DashboardLayout({ children }) {
   return (
     <html lang='en'>

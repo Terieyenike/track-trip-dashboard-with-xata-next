@@ -5,12 +5,6 @@ import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const Metadata = {
-  title: "Track your travel",
-  description:
-    "Keep track of all your adventures, never forget the amazing memories",
-};
-
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
