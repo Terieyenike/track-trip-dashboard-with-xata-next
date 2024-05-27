@@ -5,10 +5,13 @@ import { capitalizeWords } from "@/utils/capitalizeWords";
 import BtnDelTrip from "@/components/BtnDelTrip";
 import { filterTrip } from "@/utils/filterTrip";
 import { getXataClient } from "@/src/xata";
+import { notFound } from "next/navigation";
 
 export default async function Trip({ params }) {
   const xata = getXataClient();
   const { data } = await filterTrip(params);
+
+  if (!data) return notFound;
 
   const notes = await xata.db.notes.filter("trip.id", data?.id).getMany();
 

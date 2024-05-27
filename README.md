@@ -2,7 +2,10 @@
 
 Keep track of all your adventures, never forget the amazing memories using [Next.js](https://nextjs.org/) and [Xata.io](https://xata.io/)
 
-![track trips](https://github.com/Terieyenike/weatherapi-with-python/assets/25850598/aa8916aa-8140-495b-8d25-29f5fc54ec4b)
+<div style="display: flex; justify-content: space-between;">
+  <img src="https://github.com/Terieyenike/track-trip-dashboard-with-xata-next/assets/25850598/2fdddea4-23ae-4351-8817-622684fc4ed2" alt="homepage" style="width: 48%;">
+  <img src="https://github.com/Terieyenike/weatherapi-with-python/assets/25850598/aa8916aa-8140-495b-8d25-29f5fc54ec4b" alt="track trips" style="width: 48%;">
+</div>
 
 ## Getting Started
 

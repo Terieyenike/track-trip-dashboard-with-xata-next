@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Header from "@/components/Heading";
 import { useState, useEffect } from "react";
 import { getTrips } from "@/utils/get-trips";
-import { capitalizeWords } from "@/utils/capitalizeWords";
 import { formatDate } from "@/utils/date";
+import { capitalizeWords } from "@/utils/capitalizeWords";
+import Header from "@/components/Heading";
 
 export const revalidate = 0;
 
