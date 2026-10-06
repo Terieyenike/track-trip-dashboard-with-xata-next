@@ -1,96 +1,165 @@
 import Link from "next/link";
 import Image from "next/image";
-
+import { Brand, Icon } from "@/components/TravelUI";
 export default function Home() {
   return (
-    <div>
-      <section className='text-gray-600 body-font'>
-        <div className='container px-5 py-24 mx-auto md:w-[80%] lg:w-[90%]'>
-          <div className='lg:flex lg:flex-row lg:justify-center lg:items-start lg:mx-auto lg:w-full'>
-            <div className='lg:w-1/2 lg:pr-8 mb-8 lg:mb-0'>
-              <h1 className='text-3xl sm:text-5xl font-bold text-gray-900 mb-4'>
-                Keep track of all your adventures,
-                <br className='hidden sm:inline' />
-                never forget the amazing memories.
-              </h1>
-              <p className='text-lg text-gray-700 mb-8'>
-                Track Trips helps you organize your travel experiences,
-                <br className='hidden sm:inline' />
-                so you can relive and share your favorite moments anytime.
-              </p>
-              <Link
-                href='/dashboard/'
-                className='text-white bg-indigo-700 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg'>
-                Get Started
-              </Link>
-            </div>
-            <div className='lg:w-1/2'>
-              <Image
-                alt='hero image'
-                priority={true}
-                width={600}
-                height={400}
-                src='/assets/pexels-officialakfotos-18556827.jpg'
-                className='shadow-lg object-cover object-center rounded-lg'
-              />
-            </div>
-          </div>
+    <main className="landing">
+      <nav className="landing-nav">
+        <Brand />
+        <div>
+          <Link href="/explore">Travel stories</Link>
+          <a href="#how-it-works">How it works</a>
+          <a href="#features">The possibilities</a>
+          <Link className="button" href="/sign-in">
+            Sign in <Icon name="arrow" size={17} />
+          </Link>
         </div>
-      </section>
-
-      <section className='bg-gray-100 py-20'>
-        <div className='container mx-auto px-5'>
-          <div className='text-center mb-12'>
-            <h2 className='text-3xl sm:text-4xl font-bold text-gray-900'>
-              Explore Key Features
-            </h2>
-          </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8'>
-            <div className='bg-white p-8 rounded-lg shadow-md'>
-              <h3 className='text-xl font-semibold text-gray-900 mb-4'>
-                Easy Tracking
-              </h3>
-              <p className='text-gray-700'>
-                Keep all your travel details organized in one place.
-              </p>
-            </div>
-            <div className='bg-white p-8 rounded-lg shadow-md'>
-              <h3 className='text-xl font-semibold text-gray-900 mb-4'>
-                Photo Gallery
-              </h3>
-              <p className='text-gray-700'>
-                Create beautiful galleries of your favorite travel photos.
-              </p>
-            </div>
-            <div className='bg-white p-8 rounded-lg shadow-md'>
-              <h3 className='text-xl font-semibold text-gray-900 mb-4'>
-                Sharing Made Easy
-              </h3>
-              <p className='text-gray-700'>
-                Share your adventures with friends and family effortlessly.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className='bg-indigo-500 py-20'>
-        <div className='container mx-auto px-5'>
-          <div className='text-center'>
-            <h2 className='text-3xl font-bold text-white mb-4'>
-              Ready to start tracking your adventures?
-            </h2>
-            <p className='text-lg text-white mb-8'>
-              Sign up now and start preserving your travel memories!
-            </p>
-            <Link
-              href='#'
-              className='text-white bg-indigo-700 border-0 py-3 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg'>
-              Sign Up
+      </nav>
+      <section className="landing-hero">
+        <div className="landing-copy">
+          <div className="eyebrow">FOR YOUR INNER EXPLORER</div>
+          <h1>
+            A little planning.
+            <br />A world of <em>memories.</em>
+          </h1>
+          <p>
+            Plan each day, keep your budget in view, and bring the memories
+            home. Your itinerary, packing checklist, and travel journal —
+            beautifully together.
+          </p>
+          <div className="landing-actions">
+            <Link href="/sign-up" className="button">
+              Start your next chapter <Icon name="arrow" />
             </Link>
+            <a href="#how-it-works" className="text-link">
+              <span>Take a closer look</span> <Icon name="arrow" size={17} />
+            </a>
           </div>
+          <small>Your own account. Your trips, plans, and memories.</small>
+        </div>
+        <div className="landing-visual">
+          <Image
+            src="/assets/pexels-andrea-roman-291935393-15475219.jpg"
+            alt="A winding road through hills, ready for your next adventure"
+            fill
+            priority
+            sizes="(max-width: 800px) 100vw, 50vw"
+            className="cover"
+          />
+          <div className="floating-card">
+            <span className="stat-icon">
+              <Icon name="compass" />
+            </span>
+            <div>
+              <small>YOUR NEXT CHAPTER</small>
+              <strong>Somewhere unforgettable.</strong>
+              <p>Make it more than a daydream.</p>
+            </div>
+          </div>
+          <span className="landing-stamp">
+            GO SOMEWHERE
+            <br />
+            <strong>new.</strong>
+          </span>
         </div>
       </section>
-    </div>
+      <div className="landing-ribbon">
+        Less juggling tabs. More making memories.
+        <span>One workspace. Every adventure.</span>
+        <Icon name="globe" />
+      </div>
+      <section className="landing-section" id="features">
+        <div className="eyebrow">A HOME FOR YOUR WANDERLUST</div>
+        <h2>
+          From the first idea
+          <br />
+          to the “remember when?”
+        </h2>
+        <div className="feature-grid">
+          {[
+            [
+              "trips",
+              "A real plan for every day",
+              "Schedule places, meals, stays, and travel. Keep times, booking links, and estimated costs together.",
+            ],
+            [
+              "notes",
+              "Keep the moments that matter",
+              "Capture meals, discoveries, and stories with photos and a personal rating.",
+            ],
+            [
+              "globe",
+              "Know your budget. Feel ready.",
+              "Set a trip budget, check off your packing list, and download an itinerary to take with you.",
+            ],
+          ].map(([icon, title, copy]) => (
+            <article key={title}>
+              <span className="stat-icon">
+                <Icon name={icon} />
+              </span>
+              <h3>{title}</h3>
+              <p>{copy}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="landing-section how-section" id="how-it-works">
+        <div>
+          <div className="eyebrow">A SIMPLE START</div>
+          <h2>
+            Good journeys
+            <br />
+            begin here.
+          </h2>
+          <Link href="/dashboard/trip/create" className="button">
+            Plan your first trip <Icon name="arrow" />
+          </Link>
+        </div>
+        <div className="steps">
+          {[
+            [
+              "01",
+              "Pick a place",
+              "Create a trip, add your dates, and make space for inspiration.",
+            ],
+            [
+              "02",
+              "Make it your own",
+              "Build your daily itinerary, add estimated costs, and tick off your essentials.",
+            ],
+            [
+              "03",
+              "Bring the memories home",
+              "Collect photos and journal entries you’ll love coming back to.",
+            ],
+          ].map(([n, title, copy]) => (
+            <article key={n}>
+              <span>{n}</span>
+              <div>
+                <h3>{title}</h3>
+                <p>{copy}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+      <section className="landing-cta">
+        <Icon name="compass" size={36} />
+        <h2>
+          The world is waiting.
+          <br />
+          What’s your next chapter?
+        </h2>
+        <Link href="/dashboard" className="button light">
+          Explore Track Trips <Icon name="arrow" />
+        </Link>
+        <p>A private workspace for your adventures</p>
+      </section>
+      <footer className="landing-footer">
+        <Brand />
+        <p>Made for the journey.</p>
+        <span>© 2026 Track Trips</span>
+      </footer>
+    </main>
   );
 }

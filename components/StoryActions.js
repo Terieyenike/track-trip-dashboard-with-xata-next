@@ -1,0 +1,15 @@
+'use client';
+import {useEffect,useState} from 'react';
+import {useRouter} from 'next/navigation';
+import Link from 'next/link';
+import {storyToTrip} from '@/lib/stories.mjs';
+export default function StoryActions({id,story}) {
+ const router=useRouter();
+ const [open,setOpen]=useState(false),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[error,setError]=useState(''),[created,setCreated]=useState(''),[saved,setSaved]=useState(false);
+ useEffect(()=>{let active=true;fetch('/api/workspace').then(r=>r.ok?r.json():null).then(body=>{if(active && body)setSaved((body.data.bookmarks||[]).includes(id));}).catch(()=>{});return()=>{active=false;};},[id]);
+ async function change(update){setBusy(true);setError('');setMessage('');try{
+  const response=await fetch('/api/workspace');if(response.status===401){router.push('/sign-in?next='+encodeURIComponent('/stories/'+id));return;}const workspace=await response.json();if(!response.ok)throw new Error(workspace.error);
+  const result=update(workspace.data);const saved=await fetch('/api/workspace',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({data:result.data,userId:workspace.userId,revision:workspace.revision})});const body=await saved.json();if(!saved.ok)throw new Error(body.error);setMessage(result.message);if(result.saved!==undefined)setSaved(result.saved);if(result.tripId)setCreated(result.tripId);
+ }catch(error){setError(error.message);}finally{setBusy(false);}}
+ return <section className="panel story-tools"><div className="eyebrow">YOUR NEXT CHAPTER</div><h2>Inspired to go?</h2><p>Save this story for later, or turn its shared memories into a trip you can make your own.</p><div className="form-actions"><button className="button secondary" disabled={busy} onClick={()=>change(data=>{const bookmarks=data.bookmarks||[];const exists=bookmarks.includes(id);return {data:{...data,bookmarks:exists?bookmarks.filter(item=>item!==id):[id,...bookmarks]},saved:!exists,message:exists?'Removed from your saved stories.':'Saved to your account.'};})}>{saved?"Unsave story":"Save story"}</button><button className="button" disabled={busy} onClick={()=>setOpen(!open)}>Plan a similar trip</button><Link href="/saved-stories">My saved stories</Link></div>{open && <form onSubmit={event=>{event.preventDefault();const fields=new FormData(event.currentTarget);change(data=>{const trip=storyToTrip(story,id,fields.get('start'),fields.get('end'),()=>crypto.randomUUID());return {data:{...data,trips:[trip,...data.trips]},tripId:trip.id,message:'Your private trip is ready. Edit the suggested activities to suit you.'};});}}><div className="form-row"><label>Start date<input type="date" name="start" required/></label><label>End date<input type="date" name="end" required/></label></div><button className="button" disabled={busy || Boolean(created)} type="submit">{busy?'Creating…':'Create my trip'}</button></form>}{message && <p role="status">{message}</p>}{error && <p role="alert" className="form-error">{error}</p>}{created && <Link className="button" href={'/dashboard/trip/'+created}>Open my trip ↗</Link>}</section>;
+}

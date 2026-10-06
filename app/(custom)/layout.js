@@ -1,18 +1,11 @@
-import Sidebar from "@/components/Sidebar";
-import { Inter } from "next/font/google";
-import "../globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export default function DashboardLayout({ children }) {
+import { Workspace } from "@/components/Workspace";
+import { account } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+export const dynamic = "force-dynamic";
+export default async function Layout({ children }) {
+  const user = await account();
+  if (!user) redirect("/sign-in");
   return (
-    <html lang='en'>
-      <body className={inter.className}>
-        <div className='flex-col md:flex-row flex h-screen'>
-          <Sidebar />
-          <div className='w-full md:w-full overflow-auto p-10'>{children}</div>
-        </div>
-      </body>
-    </html>
+    <Workspace user={{ id: user.id, email: user.email }}>{children}</Workspace>
   );
 }

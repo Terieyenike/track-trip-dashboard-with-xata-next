@@ -1,0 +1,7 @@
+'use client';
+import {useState} from 'react';
+import Link from 'next/link';
+export default function StoryExplore({stories,unavailable}) {
+ const [search,setSearch]=useState('');const filtered=stories.filter(({story})=>[story.title,story.city,story.country,...story.memories.map(note=>note.category)].join(' ').toLowerCase().includes(search.toLowerCase()));
+ return <><label className="story-search">Find your next inspiration<input type="search" value={search} onChange={event=>setSearch(event.target.value)} placeholder="Search a destination or category" /></label><div className="card-grid">{filtered.map(({id,story})=><Link className="panel story-card" href={'/stories/'+id} key={id}><div className="eyebrow">{story.city} · {story.country}</div><h2>{story.title}</h2><p className="story-excerpt">{story.takeaway}</p><div className="story-card-author"><span className="story-author-avatar">{story.author.slice(0,1).toUpperCase()}</span><small>By {story.author}<br/>{story.memories.length} shared memories</small></div><span>Read the story ↗</span></Link>)}</div>{!filtered.length && <section className="panel empty"><h2>{unavailable?'Travel stories are getting ready.':stories.length?'No matching stories yet.':'Every journey starts with a first story.'}</h2><p>{unavailable?'Public publishing will be available once its database setup is complete.':'Share a journey and help someone discover their next adventure.'}</p><Link className="button" href="/dashboard/stories/create">Create your story</Link></section>}</>;
+}

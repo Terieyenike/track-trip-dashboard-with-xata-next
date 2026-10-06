@@ -1,18 +1,21 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata = {
-  title: "Track your travel",
+  title: "Track Trips — A little planning. A world of memories.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
   description:
-    "Keep track of all your adventures, never forget the amazing memories",
+    "Your personal travel workspace. Plan adventures and collect the moments that matter.",
 };
-
 export default function RootLayout({ children }) {
   return (
-    <html lang='en'>
-      <body className={inter.className}>{children}</body>
+    <html lang="en">
+      <body>{children}</body>
     </html>
   );
 }
