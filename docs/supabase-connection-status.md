@@ -14,3 +14,7 @@ Project: `xpedkbevnloobfejxrsl`
 The migration is atomic and the SQL isolation test rolls back temporary records. See [setup](supabase-setup.md) for both files, callback URLs, email configuration, and deployment checks.
 
 Public stories and private report queue migrations were applied on 2026-10-06. Live rollback-only SQL tests passed for public opt-in, draft privacy, blocked foreign writes, unpublishing, and report privacy. Unit tests cover template identity/date remapping, private-field exclusion, bookmarks, and recorded actual spending (27 tests total). Browser checks covered the saved-story empty state and actual spending controls. Real-account publication, bookmarking, template creation, and report submission still need full end-to-end verification with deliberately chosen test content.
+
+Protected admin review was activated on 2026-10-06 for the user-approved account `teyenike1@gmail.com`. Live rollback-only verification passed for admin isolation, self-promotion denial, report review guards, hide/restore enforcement, audit history, and stale-decision rejection. The current non-admin browser account was denied access. Full admin UI verification awaits login with the designated Gmail account. Email/background moderation alerts remain unconfigured.
+
+Administrator access was subsequently switched by user request to `teyenike@duck.com`, with Gmail membership revoked. The signed-in Duck account successfully opened `/admin/reports`.

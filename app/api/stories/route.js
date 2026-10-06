@@ -27,6 +27,9 @@ export async function POST(request) {
    if(error)throw error;
    return json({ok:true});
   }
+  const {data:existing,error:existingError}=await client.from('travel_stories').select('*').eq('owner_id',user.id).eq('trip_id',input.tripId).maybeSingle();
+  if(existingError)throw existingError;
+  if(existing?.moderation_hidden)return json({error:'This story is held by a moderator and cannot be published until the hold is lifted.'},403);
   if(input.action!=='publish' || input.confirmPublic!==true)return json({error:'Review and confirm the public story first.'},400);
   const {data:workspace,error}=await client.from('travel_workspaces').select('data').eq('owner_id',user.id).single();
   if(error)throw error;

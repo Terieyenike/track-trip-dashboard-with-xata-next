@@ -77,7 +77,9 @@ export default function AuthForm({ mode, enabled, confirmationError = false, des
             {mode !== "reset-password" && (
               <label>
                 Email address
+                {/* Password managers may decorate credential inputs before hydration. */}
                 <input
+                  suppressHydrationWarning
                   type="email"
                   name="email"
                   autoComplete="email"
@@ -89,7 +91,9 @@ export default function AuthForm({ mode, enabled, confirmationError = false, des
             {mode !== "forgot-password" && (
               <label>
                 Password
+                {/* Password managers may decorate credential inputs before hydration. */}
                 <input
+                  suppressHydrationWarning
                   type="password"
                   name="password"
                   autoComplete={
@@ -109,7 +113,9 @@ export default function AuthForm({ mode, enabled, confirmationError = false, des
             {mode === "reset-password" && (
               <label>
                 Confirm password
+                {/* Password managers may decorate credential inputs before hydration. */}
                 <input
+                  suppressHydrationWarning
                   type="password"
                   name="confirm"
                   autoComplete="new-password"

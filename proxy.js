@@ -8,7 +8,7 @@ export async function proxy(request) {
     !process.env.NEXT_PUBLIC_SUPABASE_URL ||
     !process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
   ) {
-    if (request.nextUrl.pathname.startsWith("/dashboard"))
+    if ((request.nextUrl.pathname.startsWith("/dashboard") || request.nextUrl.pathname.startsWith("/admin")))
       return NextResponse.redirect(new URL("/sign-in", request.url));
     return response;
   }
@@ -42,9 +42,9 @@ export async function proxy(request) {
   } catch {
     /* Fail closed if auth cannot be verified. */
   }
-  if (request.nextUrl.pathname.startsWith("/dashboard") && !user) {
+  if ((request.nextUrl.pathname.startsWith("/dashboard") || request.nextUrl.pathname.startsWith("/admin")) && !user) {
     const signIn = new URL("/sign-in", request.url);
-    if (request.nextUrl.pathname === "/dashboard/stories/create") signIn.searchParams.set("next", request.nextUrl.pathname);
+    if (["/dashboard/stories/create", "/admin/reports"].includes(request.nextUrl.pathname)) signIn.searchParams.set("next", request.nextUrl.pathname);
     const redirect = NextResponse.redirect(signIn);
     response.cookies.getAll().forEach((cookie) => redirect.cookies.set(cookie));
     redirect.headers.set("Cache-Control", "private, no-store");
@@ -55,6 +55,7 @@ export async function proxy(request) {
 export const config = {
   matcher: [
     "/dashboard/:path*",
+    "/admin/:path*",
     "/api/:path*",
     "/auth/:path*",
     "/reset-password",

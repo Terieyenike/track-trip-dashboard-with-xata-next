@@ -54,6 +54,7 @@ function WorkspaceShell({ children }) {
         <Brand />
         <div className="workspace-label">YOUR WORKSPACE</div>
         <nav aria-label="Workspace">
+          {user.isAdmin && <Link className="nav-link" href="/admin/reports"><Icon name="notes" />Review inbox</Link>}
           <Link className={path.includes("/stories/create") ? "nav-link active" : "nav-link"} href="/dashboard/stories/create"><Icon name="plus" />Create a story</Link>
           <Link className="nav-link" href="/saved-stories"><Icon name="notes" />Saved stories</Link>
           <Link className="nav-link" href="/explore"><Icon name="globe" />Travel stories</Link>
