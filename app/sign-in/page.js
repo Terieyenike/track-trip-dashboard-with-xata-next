@@ -1,3 +1,4 @@
+import {pageMetadata} from "@/lib/page-metadata";
 import { safeNext } from "@/lib/security.mjs";
 import AuthForm from "@/components/AuthForm";
 import { configured, account } from "@/lib/supabase/server";
@@ -16,3 +17,5 @@ export default async function Page(props) {
     />
   );
 }
+
+export const metadata = pageMetadata('Sign in','Sign in to your private trips, journal, saved stories, and publishing workspace.',true);

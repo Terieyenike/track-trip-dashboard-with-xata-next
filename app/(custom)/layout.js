@@ -9,3 +9,5 @@ export default async function Layout({ children }) {
     <Workspace user={{ id: user.id, email: user.email }}>{children}</Workspace>
   );
 }
+
+export const metadata = {robots:{index:false,follow:false}};
