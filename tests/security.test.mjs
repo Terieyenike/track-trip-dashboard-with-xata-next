@@ -1,4 +1,4 @@
-import test from "node:test";
+import test, { beforeEach, afterEach } from "node:test";
 import assert from "node:assert/strict";
 import {
   sameOrigin,
@@ -9,6 +9,16 @@ import {
   limitedBody,
 } from "../lib/security.mjs";
 import { parseTravelData, initial } from "../utils/travel-data.mjs";
+// Each origin test defines its own configuration, independent of deployment env.
+let deploymentOrigin;
+beforeEach(() => {
+  deploymentOrigin = process.env.APP_ORIGIN;
+  delete process.env.APP_ORIGIN;
+});
+afterEach(() => {
+  if (deploymentOrigin === undefined) delete process.env.APP_ORIGIN;
+  else process.env.APP_ORIGIN = deploymentOrigin;
+});
 test("mutations reject cross-site and missing origins", () => {
   const request = (origin) =>
     new Request("https://trips.example/api/workspace", {
