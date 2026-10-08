@@ -1,30 +1,54 @@
 # Track Trips
 
-A travel planning and journaling app with Supabase account support. Project connection and live account-isolation verification are still required.
+Plan your trip. Keep your memories. Inspire the next journey.
 
-## Run
+Track Trips brings daily itineraries, budgets, packing lists, and a private travel journal into one account. Publish selected memories as public stories, save inspiration, and use a story to start your own private trip plan.
 
-```sh
-npm install
-cp .env.example .env.local
-# Set the Supabase project URL and publishable key in .env.local.
-npm run dev
-```
+[Open Track Trips](https://tracktrips-app.vercel.app) · [Explore stories](https://tracktrips-app.vercel.app/explore)
 
-See [Supabase setup](docs/supabase-setup.md) for the migration, authentication URLs, email templates, and two-account tests. Never use a service-role key in this app. Without configuration, sign-in explains that account setup is pending; dashboard routes remain protected.
-
-`npm run build`, `npm run lint`, and `npm test` verify the build, code, and data/security helpers. `.next-dev` and `.next` keep development and production artifacts separate.
+![Track Trips homepage](docs/images/homepage.png)
 
 ## Features
 
-Responsive travel homepage, inherited compass favicons, authenticated workspace, email/password sign-in and sign-up, confirmation and password reset, sign-out, trip and journal CRUD, private photos, daily plans, budget estimates, packing checklists, and itinerary/JSON exports.
+- Private trips and journal entries with account-scoped photo storage.
+- Daily activities, booking links, packing checklists, and itinerary exports.
+- Estimated and recorded spending in integer minor units; currency labels do not convert amounts.
+- Opt-in public stories, private bookmarks, and story-to-trip templates with author credit.
+- Protected report review with moderation holds and decision history.
+- Responsive layouts, reduced-motion support, and keyboard navigation.
+
+## Run locally
+
+Requires Node.js 22 and a configured Supabase project.
+
+```sh
+npm ci
+cp .env.example .env.local
+# Configure your Supabase project URL, publishable key, and APP_ORIGIN.
+npm run dev
+```
+
+Follow [Supabase setup](docs/supabase-setup.md) for migrations, authentication URLs, email templates, and ownership checks. Open the app using the configured local origin. Without Supabase configuration, authenticated routes remain protected. Never put service-role keys or database management credentials in the app.
+
+```sh
+npm run lint
+npm test
+npm run build
+```
+
+Development uses `.next-dev`; production builds use `.next`.
+
+## Documentation
+
+- [Supabase setup](docs/supabase-setup.md)
+- [Public stories and privacy](docs/public-stories.md)
+- [Administrator moderation](docs/admin-review.md)
+- [Vercel deployment and automatic releases](docs/vercel-deployment.md)
 
 ## Data and security
 
-Accounts start with an empty workspace. User identity is verified on the server, the database has row-level ownership policies, and private photo routes enforce the same ownership. Browser JavaScript receives no authentication tokens; session cookies are HttpOnly and Secure in production. Mutations check request origin. Failed cloud saves are shown, and conflicting device edits are rejected using a database revision check.
+User identity is checked on the server, and database policies isolate private workspaces. Session cookies are HttpOnly and Secure in production. Mutations validate request origin; conflicting workspace edits are rejected using a revision check.
 
-Existing `track-trips-preview-v1` browser-local records are preserved. Import is optional, copies records into the signed-in account, and retains the originals. Unavailable legacy records require a previous export or backup; changing providers does not recover them.
+Workspaces are bounded JSONB records: 500 trips, 2,000 memories, and 8 MB per account, with photos stored separately. Larger workspaces or collaboration need a different data model. Existing browser-local preview records can be imported explicitly; originals remain on the device. Downloads are snapshots, not a verified restore flow.
 
-Initial cloud workspaces use bounded JSONB per account (500 trips, 2,000 memories, 8 MB), with photos in separate private storage. Move to per-record tables before large workspaces, collaboration, or analytics. Monetary values use integer minor units; changing currency relabels amounts without conversion. Exports are not a verified restore or sharing flow.
-
-Before public launch, verify the actual project, email delivery, two-account access isolation, backup restoration (including photos), abuse controls, and HTTPS deployment. See the [relaunch brief](docs/product-hunt-relaunch.md) and [setup details](docs/supabase-setup.md).
+Before public onboarding, configure reliable SMTP and exact authentication redirects, test account recovery and ownership with separate accounts, and verify database/photo backup restoration. Moderation has no background notification service. Offline access, currency conversion, and team collaboration are not implemented.
