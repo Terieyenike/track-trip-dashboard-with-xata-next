@@ -23,7 +23,7 @@ Responsive travel homepage, inherited compass favicons, authenticated workspace,
 
 Accounts start with an empty workspace. User identity is verified on the server, the database has row-level ownership policies, and private photo routes enforce the same ownership. Browser JavaScript receives no authentication tokens; session cookies are HttpOnly and Secure in production. Mutations check request origin. Failed cloud saves are shown, and conflicting device edits are rejected using a database revision check.
 
-Existing `track-trips-preview-v1` browser-local records are preserved. Import is optional, copies records into the signed-in account, and retains the originals. No unavailable Xata data is recovered by this migration. Legacy Xata source files remain unused by active routes.
+Existing `track-trips-preview-v1` browser-local records are preserved. Import is optional, copies records into the signed-in account, and retains the originals. Unavailable legacy records require a previous export or backup; changing providers does not recover them.
 
 Initial cloud workspaces use bounded JSONB per account (500 trips, 2,000 memories, 8 MB), with photos in separate private storage. Move to per-record tables before large workspaces, collaboration, or analytics. Monetary values use integer minor units; changing currency relabels amounts without conversion. Exports are not a verified restore or sharing flow.
 

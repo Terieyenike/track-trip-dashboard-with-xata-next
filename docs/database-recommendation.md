@@ -1,6 +1,6 @@
 # Recommended replacement: Supabase Postgres
 
-For Track Trips, use Supabase for Postgres, authentication, and private photo storage. Trips, journal entries, itinerary activities, packing items, and trip members fit relational tables well. This is a recommendation; no cloud project or migration has been created.
+For Track Trips, use Supabase for Postgres, authentication, and private photo storage. Trips, journal entries, itinerary activities, packing items, and trip members fit relational tables well. The Supabase project is connected and the versioned ownership, public-story, report, and admin-review migrations have been applied. See the connection status and setup documents for verification and remaining launch work.
 
 ## Migration approach
 
@@ -9,7 +9,7 @@ For Track Trips, use Supabase for Postgres, authentication, and private photo st
 3. Keep journal photos in a private storage bucket, with scoped access and temporary signed URLs.
 4. Offer an explicit import of existing browser-local trips after sign-in. Preserve the local originals until the import has been verified. Do not silently upload the seeded demo records.
 5. Use versioned SQL migrations, independent database dumps, and separately backed-up photo objects. Supabase database backups do not include stored photo objects. Test restoration before launch.
-6. Retire the unused Xata client only after the new adapter and ownership checks are verified. If Xata data is unavailable, recovery needs a previous export or backup; changing providers cannot recover deleted records.
+6. Legacy database clients, schemas, helpers, and SDK dependencies have been removed. Unavailable legacy records require a previous export or backup; changing providers cannot recover deleted records.
 
 ## Alternative
 

@@ -32,10 +32,6 @@ const nextConfig = {
         protocol: "https",
         hostname: "res.cloudinary.com",
       },
-      {
-        protocol: "https",
-        hostname: "eu-west-1.storage.xata.sh",
-      },
     ],
   },
 };
